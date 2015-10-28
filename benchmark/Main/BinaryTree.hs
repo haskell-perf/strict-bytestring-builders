@@ -2,7 +2,9 @@ module Main.BinaryTree where
 
 import Main.Prelude hiding (traverse_, fold, empty)
 import Foreign
+import Control.Monad.Primitive
 import qualified Data.ByteString as A
+import qualified Data.ByteString.Unsafe as A
 import qualified Data.Vector.Storable.Mutable as B
 
 
@@ -56,5 +58,26 @@ fold step init (Builder tree) =
     Branch tree1 tree2 -> fold step (fold step init (Builder tree1)) (Builder tree2)
 
 bytesOf :: Builder -> Bytes
-bytesOf (Builder tree) =
-  mconcat (toList tree)
+bytesOf builder =
+  runST $ do
+    offsetRef <- newSTRef 0
+    writeRef <- newSTRef (const (pure ()))
+    flip traverse_ builder $ \bytes -> do
+      offset <- readSTRef offsetRef
+      write <- readSTRef writeRef
+      let (newWrite, newOffset) =
+            A.foldl'
+              (\(write, offset) byte -> (\vector -> write vector >> B.unsafeWrite vector offset byte, succ offset))
+              (write, offset)
+              bytes
+      writeSTRef offsetRef newOffset
+      writeSTRef writeRef newWrite
+    length <- readSTRef offsetRef
+    write <- readSTRef writeRef
+    vector <- B.new length
+    write vector
+    let (fptr, len) = B.unsafeToForeignPtr0 vector
+    unsafePrimToST $ withForeignPtr fptr $ \ptr ->
+      A.unsafePackCStringFinalizer ptr len
+        (finalizeForeignPtr fptr)
+
