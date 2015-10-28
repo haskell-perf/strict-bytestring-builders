@@ -1,6 +1,6 @@
 module Main.BinaryTree where
 
-import Main.Prelude hiding (traverse_, fold)
+import Main.Prelude hiding (traverse_, fold, empty)
 import Foreign
 import qualified Data.ByteString as A
 import qualified Data.Vector.Storable.Mutable as B
@@ -14,6 +14,13 @@ data BinaryTree a =
   Leaf a |
   Branch (BinaryTree a) (BinaryTree a)
   deriving (Functor, Foldable, Traversable)
+
+instance Monoid Builder where
+  mempty = empty
+  mappend = append
+
+instance IsString Builder where
+  fromString = bytes . fromString
 
 empty :: Builder
 empty =
