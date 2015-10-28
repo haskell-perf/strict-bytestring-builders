@@ -6,32 +6,30 @@ If you know any way of optimizing any particular benchmark or can suggest anothe
 
 # Current results
 
-So far, `Main.BinaryTree` beats the competition.
-
     benchmarking Data.ByteString
-    time                 1.219 μs   (1.182 μs .. 1.269 μs)
-                         0.993 R²   (0.990 R² .. 0.997 R²)
-    mean                 1.211 μs   (1.184 μs .. 1.242 μs)
-    std dev              94.00 ns   (70.11 ns .. 113.4 ns)
-    variance introduced by outliers: 83% (severely inflated)
+    time                 1.118 μs   (1.112 μs .. 1.124 μs)
+                         1.000 R²   (0.999 R² .. 1.000 R²)
+    mean                 1.117 μs   (1.114 μs .. 1.123 μs)
+    std dev              14.69 ns   (11.77 ns .. 20.30 ns)
+    variance introduced by outliers: 12% (moderately inflated)
 
     benchmarking Data.ByteString.Builder
-    time                 918.3 ns   (874.3 ns .. 948.8 ns)
-                         0.991 R²   (0.987 R² .. 0.996 R²)
-    mean                 857.5 ns   (842.1 ns .. 877.2 ns)
-    std dev              63.70 ns   (46.89 ns .. 84.86 ns)
-    variance introduced by outliers: 82% (severely inflated)
+    time                 1.612 μs   (1.561 μs .. 1.666 μs)
+                         0.994 R²   (0.991 R² .. 0.998 R²)
+    mean                 1.648 μs   (1.603 μs .. 1.691 μs)
+    std dev              156.9 ns   (124.3 ns .. 181.7 ns)
+    variance introduced by outliers: 87% (severely inflated)
 
     benchmarking Main.BinaryTree
-    time                 323.5 ns   (320.7 ns .. 326.5 ns)
-                         0.998 R²   (0.997 R² .. 0.999 R²)
-    mean                 337.4 ns   (331.6 ns .. 345.5 ns)
-    std dev              25.90 ns   (21.89 ns .. 30.58 ns)
-    variance introduced by outliers: 84% (severely inflated)
+    time                 1.282 μs   (1.276 μs .. 1.291 μs)
+                         0.999 R²   (0.998 R² .. 0.999 R²)
+    mean                 1.335 μs   (1.310 μs .. 1.363 μs)
+    std dev              111.7 ns   (83.96 ns .. 139.7 ns)
+    variance introduced by outliers: 85% (severely inflated)
 
     benchmarking Main.BinaryTreeWithSize
-    time                 4.601 μs   (4.568 μs .. 4.647 μs)
-                         1.000 R²   (0.999 R² .. 1.000 R²)
-    mean                 4.607 μs   (4.586 μs .. 4.650 μs)
-    std dev              96.12 ns   (47.59 ns .. 164.6 ns)
-    variance introduced by outliers: 22% (moderately inflated)
+    time                 6.060 μs   (6.019 μs .. 6.122 μs)
+                         0.998 R²   (0.995 R² .. 0.999 R²)
+    mean                 6.207 μs   (6.106 μs .. 6.391 μs)
+    std dev              438.9 ns   (305.6 ns .. 602.6 ns)
+    variance introduced by outliers: 77% (severely inflated)

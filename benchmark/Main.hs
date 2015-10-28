@@ -14,27 +14,28 @@ import qualified Data.ByteString
 main =
   defaultMain
   [
-    bench "Data.ByteString" $
-    nf (sample id) (<>)
+    bench "Data.ByteString" $ nf sample (id, (<>), id)
     ,
-    bench "Data.ByteString.Builder" $
-    nf (Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString)
-       (sample Data.ByteString.Builder.byteString (<>))
+    bench "Data.ByteString.Builder" $ nf sample $
+    (
+      Data.ByteString.Builder.byteString,
+      (<>),
+      Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString
+    )
     ,
-    bench "Main.BinaryTree" $
-    nf (Main.BinaryTree.bytesOf)
-       (sample Main.BinaryTree.bytes Main.BinaryTree.append)
+    bench "Main.BinaryTree" $ nf sample $
+    (Main.BinaryTree.bytes, Main.BinaryTree.append, Main.BinaryTree.bytesOf)
     ,
-    bench "Main.BinaryTreeWithSize" $
-    nf (Main.BinaryTreeWithSize.bytesOf)
-       (sample Main.BinaryTreeWithSize.bytes Main.BinaryTreeWithSize.append)
+    bench "Main.BinaryTreeWithSize" $ nf sample $
+    (Main.BinaryTreeWithSize.bytes, Main.BinaryTreeWithSize.append, Main.BinaryTreeWithSize.bytesOf)
   ]
 
 
 {-# NOINLINE sample #-}
-sample :: (Bytes -> a) -> (a -> a -> a) -> a
-sample pure (<>) =
-  (pure "hello" <> pure "asdf") <>
-  pure "fsndfn" <>
-  (pure "dfgknfg" <> pure "aaaaaa")
+sample :: (Bytes -> a, a -> a -> a, a -> Bytes) -> Bytes
+sample (fromBytes, (<>), toBytes) =
+  toBytes $
+    (fromBytes "hello" <> fromBytes "asdf") <>
+    fromBytes "fsndfn" <>
+    (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
 
