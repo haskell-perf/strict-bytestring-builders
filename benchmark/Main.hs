@@ -4,6 +4,7 @@ import Main.Prelude
 import Control.DeepSeq
 import Criterion.Main
 import qualified Main.BinaryTree
+import qualified Main.BinaryTreeWithSize
 import qualified Main.Concat
 import qualified Data.ByteString.Builder
 import qualified Data.ByteString.Lazy
@@ -23,6 +24,10 @@ main =
     bench "Main.BinaryTree" $
     nf (Main.BinaryTree.bytesOf)
        (sample Main.BinaryTree.bytes Main.BinaryTree.append)
+    ,
+    bench "Main.BinaryTreeWithSize" $
+    nf (Main.BinaryTreeWithSize.bytesOf)
+       (sample Main.BinaryTreeWithSize.bytes Main.BinaryTreeWithSize.append)
   ]
 
 
