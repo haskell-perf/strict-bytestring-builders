@@ -11,12 +11,10 @@ where
 -- base-prelude
 -------------------------
 import BasePrelude as Exports hiding (assert, left, right, isLeft, isRight, error)
-import MTLPrelude as Exports hiding (shift)
 
--- either
+-- mtl-prelude
 -------------------------
-import Control.Monad.Trans.Either as Exports
-import Data.Either.Combinators as Exports
+import MTLPrelude as Exports hiding (shift)
 
 -- custom
 -------------------------
