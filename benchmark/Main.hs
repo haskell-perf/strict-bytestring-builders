@@ -25,40 +25,40 @@ sampleGroup :: (String, Sample) -> Benchmark
 sampleGroup (title, sample) =
   bgroup title
   [
-    bench "Main.BufferBuilderMonoid" $ nf sample $
-    (Main.BufferBuilderMonoid.bytes, mappend, mempty, Main.BufferBuilderMonoid.bytesOf)
-    ,
-    bench "Main.Concat" $ nf sample $
-    (Main.Concat.bytes, mappend, mempty, Main.Concat.bytesOf)
-    ,
-    bench "Main.Seq" $ nf sample $
-    (Main.Seq.bytes, mappend, mempty, Main.Seq.bytesOf)
-    ,
-    bench "Main.DList" $ nf sample $
-    (Main.DList.bytes, mappend, mempty, Main.DList.bytesOf)
-    ,
-    bench "Main.DListWithSize" $ nf sample $
-    (Main.DListWithSize.bytes, mappend, mempty, Main.DListWithSize.bytesOf)
+    bench "Main.BinaryTree, explicit allocation" $ nf sample $
+    (Main.BinaryTree.bytes, mappend, mempty, Main.BinaryTree.bytesOf_explicitAllocation)
     ,
     bench "Main.BinaryTree, thru list" $ nf sample $
     (Main.BinaryTree.bytes, mappend, mempty, Main.BinaryTree.bytesOf_thruList)
     ,
-    bench "Main.BinaryTree, explicit allocation" $ nf sample $
-    (Main.BinaryTree.bytes, mappend, mempty, Main.BinaryTree.bytesOf_explicitAllocation)
-    ,
     bench "Main.BinaryTreeWithSize" $ nf sample $
     (Main.BinaryTreeWithSize.bytes, mappend, mempty, Main.BinaryTreeWithSize.bytesOf)
     ,
-    bench "Main.ListT" $ nf sample $
-    (Main.ListT.bytes, mappend, mempty, Main.ListT.bytesOf)
+    bench "Main.BufferBuilderMonoid" $ nf sample $
+    (Main.BufferBuilderMonoid.bytes, mappend, mempty, Main.BufferBuilderMonoid.bytesOf)
     ,
-    bench "List" $ nf sample $
-    (pure, mappend, mempty, mconcat)
+    bench "Main.DListWithSize" $ nf sample $
+    (Main.DListWithSize.bytes, mappend, mempty, Main.DListWithSize.bytesOf)
+    ,
+    bench "Main.DList" $ nf sample $
+    (Main.DList.bytes, mappend, mempty, Main.DList.bytesOf)
+    ,
+    bench "Main.Seq" $ nf sample $
+    (Main.Seq.bytes, mappend, mempty, Main.Seq.bytesOf)
     ,
     bench "Data.ByteString.Builder" $ nf sample $
     (Data.ByteString.Builder.byteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString)
     ,
     bench "Data.ByteString" $ nf sample (id, mappend, mempty, id)
+    ,
+    bench "Main.Concat" $ nf sample $
+    (Main.Concat.bytes, mappend, mempty, Main.Concat.bytesOf)
+    ,
+    bench "List" $ nf sample $
+    (pure, mappend, mempty, mconcat)
+    ,
+    bench "Main.ListT" $ nf sample $
+    (Main.ListT.bytes, mappend, mempty, Main.ListT.bytesOf)
   ]
 
 type Sample =
