@@ -64,6 +64,13 @@ traverseEachByte_ action (Builder tree) =
     Leaf bytes -> A.foldl' (\acc byte -> acc *> action byte) (pure ()) bytes
     Branch tree1 tree2 -> traverseEachByte_ action (Builder tree1) *> traverseEachByte_ action (Builder tree2)
 
+foldEachByte :: (a -> Word8 -> a) -> a -> Builder -> a
+foldEachByte step init (Builder tree) =
+  case tree of
+    Void -> init
+    Leaf bytes -> A.foldl' step init bytes
+    Branch tree1 tree2 -> foldEachByte step (foldEachByte step init (Builder tree1)) (Builder tree2)
+
 bytesOf :: Builder -> Bytes
 bytesOf builder =
   runST $ do
