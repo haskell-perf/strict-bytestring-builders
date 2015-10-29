@@ -14,7 +14,11 @@ import qualified Data.ByteString
 main =
   defaultMain
   [
-    bench "Data.ByteString" $ nf sample (id, (<>), id)
+    bench "Main.BinaryTree" $ nf sample $
+    (Main.BinaryTree.bytes, Main.BinaryTree.append, Main.BinaryTree.bytesOf)
+    ,
+    bench "Main.BinaryTreeWithSize" $ nf sample $
+    (Main.BinaryTreeWithSize.bytes, Main.BinaryTreeWithSize.append, Main.BinaryTreeWithSize.bytesOf)
     ,
     bench "Data.ByteString.Builder" $ nf sample $
     (
@@ -23,11 +27,7 @@ main =
       Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString
     )
     ,
-    bench "Main.BinaryTree" $ nf sample $
-    (Main.BinaryTree.bytes, Main.BinaryTree.append, Main.BinaryTree.bytesOf)
-    ,
-    bench "Main.BinaryTreeWithSize" $ nf sample $
-    (Main.BinaryTreeWithSize.bytes, Main.BinaryTreeWithSize.append, Main.BinaryTreeWithSize.bytesOf)
+    bench "Data.ByteString" $ nf sample (id, (<>), id)
   ]
 
 
