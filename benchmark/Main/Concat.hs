@@ -7,6 +7,7 @@ import qualified Data.ByteString as A
 
 newtype Builder =
   Builder (Concat Bytes)
+  deriving (Monoid)
 
 newtype Concat a =
   Concat (([a] -> a) -> a)
@@ -22,6 +23,12 @@ instance Monoid (Concat a) where
   mconcat list =
     Concat (\concat -> concat (map (\(Concat run) -> run concat) list))
 
-toBytes :: Builder -> Bytes
-toBytes =
-  undefined
+{-# INLINABLE bytes #-}
+bytes :: Bytes -> Builder
+bytes bytes =
+  Builder (Concat (\concat -> bytes))
+
+{-# INLINABLE bytesOf #-}
+bytesOf :: Builder -> Bytes
+bytesOf (Builder (Concat onConcat)) =
+  onConcat mconcat

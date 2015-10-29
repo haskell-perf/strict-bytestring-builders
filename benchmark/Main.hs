@@ -15,6 +15,9 @@ import qualified Data.ByteString
 main =
   defaultMain
   [
+    bench "Main.Concat" $ nf sample $
+    (Main.Concat.bytes, mappend, Main.Concat.bytesOf)
+    ,
     bench "Main.DList, thru list" $ nf sample $
     (Main.DList.bytes, mappend, Main.DList.bytesOf)
     ,
