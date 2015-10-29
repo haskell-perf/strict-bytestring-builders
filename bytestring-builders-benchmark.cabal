@@ -57,6 +57,7 @@ executable benchmark
     vector == 0.11.*,
     bytestring >= 0.10.6 && < 0.11,
     -- general:
+    list-t == 0.4.*,
     primitive >= 0.6 && < 0.7,
     deepseq == 1.*,
     list-t >= 0.4 && < 0.5,
