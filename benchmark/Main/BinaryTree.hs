@@ -64,6 +64,14 @@ traverseEachByte_ action (Builder tree) =
     Leaf bytes -> A.foldl' (\acc byte -> acc *> action byte) (pure ()) bytes
     Branch tree1 tree2 -> traverseEachByte_ action (Builder tree1) *> traverseEachByte_ action (Builder tree2)
 
+traverseEachByteWithIndex_ :: Applicative m => ((Int, Word8) -> m ()) -> Builder -> m ()
+traverseEachByteWithIndex_ action builder =
+  snd $
+  foldEachByte
+    (\(index, acc) byte -> (succ index, acc *> action (index, byte)))
+    (0, pure ())
+    builder
+
 foldEachByte :: (a -> Word8 -> a) -> a -> Builder -> a
 foldEachByte step init (Builder tree) =
   case tree of
@@ -75,11 +83,7 @@ bytesOf :: Builder -> Bytes
 bytesOf builder =
   runST $ do
     vector <- B.new (lengthOf builder)
-    offsetRef <- newSTRef 0
-    flip traverseEachByte_ builder $ \byte -> do
-      offset <- readSTRef offsetRef
-      B.unsafeWrite vector offset byte
-      writeSTRef offsetRef (succ offset)
+    traverseEachByteWithIndex_ (\(index, byte) -> B.unsafeWrite vector index byte) builder
     let (fptr, len) = B.unsafeToForeignPtr0 vector
     unsafePrimToST $ withForeignPtr fptr $ \ptr ->
       A.unsafePackCStringFinalizer ptr len
