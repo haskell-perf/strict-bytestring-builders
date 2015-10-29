@@ -48,6 +48,9 @@ sampleGroup (title, sample) =
     bench "Main.ListT" $ nf sample $
     (Main.ListT.bytes, mappend, mempty, Main.ListT.bytesOf)
     ,
+    bench "List" $ nf sample $
+    (pure, mappend, mempty, mconcat)
+    ,
     bench "Data.ByteString.Builder" $ nf sample $
     (Data.ByteString.Builder.byteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString)
     ,
