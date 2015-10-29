@@ -1,9 +1,10 @@
 module Main.BinaryTreeWithSize where
 
 import Main.Prelude hiding (traverse_, fold, empty)
-import Foreign
 import qualified Data.ByteString as A
-import qualified Data.Vector.Storable.Mutable as B
+import qualified Data.ByteString.Internal as B
+import qualified Main.Bytes as C
+import qualified Foreign as D
 
 
 data Builder =
@@ -12,6 +13,9 @@ data Builder =
 instance Monoid Builder where
   mempty = empty
   mappend = append
+
+instance IsString Builder where
+  fromString = bytes . fromString
 
 data BinaryTree a =
   Void |
@@ -35,24 +39,19 @@ lengthOf :: Builder -> Int
 lengthOf (Builder length tree) =
   length
 
+-- |
+-- FIXME: Seriously needs some optimization!
+-- It must perform better than \"thruList\", not worse.
+-- 
+-- See
+-- http://hackage.haskell.org/package/bytestring-0.10.6.0/docs/src/Data.ByteString.Internal.html#unsafeCreate
 bytesOf :: Builder -> Bytes
 bytesOf (Builder length tree) =
-  fill length tree
+  B.unsafeCreate length $ void . pokeTree tree
 
-fill len t0 = unsafePerformIO $ do
-  ptr <- mallocArray len
-  let
-    go !i (Branch l r) = do
-      ll <- go i l
-      go ll r
-
-    go !i (Leaf a) = writeBS 0 i
-      where
-        writeBS !j !ij
-          | j < A.length a = pokeElemOff ptr ij (A.index a j) >> writeBS (j+1) (ij+1)
-          | otherwise      = return ij
-
-    go !i Void    = return 0
-
-  go 0 t0
-  A.packCStringLen (castPtr ptr, len)
+pokeTree :: BinaryTree Bytes -> D.Ptr Word8 -> IO (D.Ptr Word8)
+pokeTree tree ptr =
+  case tree of
+    Void -> pure ptr
+    Leaf bytes -> C.poke bytes ptr
+    Branch tree1 tree2 -> pokeTree tree1 ptr >>= pokeTree tree2
