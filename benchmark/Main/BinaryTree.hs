@@ -1,11 +1,10 @@
 module Main.BinaryTree where
 
 import Main.Prelude hiding (traverse_, fold, empty)
-import Foreign
+import Foreign hiding (void)
 import Control.Monad.Primitive
 import qualified Data.ByteString as A
-import qualified Data.ByteString.Unsafe as A
-import qualified Data.Vector.Storable.Mutable as B
+import qualified Data.ByteString.Internal as B
 
 
 newtype Builder =
@@ -86,13 +85,14 @@ bytesOf_thruList (Builder tree) =
 -- |
 -- FIXME: Seriously needs some optimization!
 -- It must perform better than \"thruList\", not worse.
+-- 
+-- See
+-- http://hackage.haskell.org/package/bytestring-0.10.6.0/docs/src/Data.ByteString.Internal.html#unsafeCreate
 bytesOf_explicitAllocation :: Builder -> Bytes
 bytesOf_explicitAllocation builder =
-  runST $ do
-    vector <- B.new (lengthOf builder)
-    traverseEachByteWithIndex_ (\(index, byte) -> B.unsafeWrite vector index byte) builder
-    let (fptr, len) = B.unsafeToForeignPtr0 vector
-    unsafePrimToST $ withForeignPtr fptr $ \ptr ->
-      A.unsafePackCStringFinalizer ptr len
-        (finalizeForeignPtr fptr)
-
+  B.unsafeCreate (lengthOf builder) $ \ptr ->
+    void $
+    foldEachByte
+      (\ptrIO byte -> ptrIO >>= \ptr -> poke ptr byte >> pure (plusPtr ptr 1))
+      (pure ptr)
+      builder
