@@ -9,6 +9,7 @@ import qualified Main.Concat
 import qualified Main.DList
 import qualified Main.Seq
 import qualified Main.BufferBuilderMonoid
+import qualified Main.ListT
 import qualified Data.ByteString.Builder
 import qualified Data.ByteString.Lazy
 import qualified Data.ByteString
@@ -43,6 +44,9 @@ sampleGroup (title, sample) =
     ,
     bench "Main.BinaryTreeWithSize" $ nf sample $
     (Main.BinaryTreeWithSize.bytes, mappend, mempty, Main.BinaryTreeWithSize.bytesOf)
+    ,
+    bench "Main.ListT" $ nf sample $
+    (Main.ListT.bytes, mappend, mempty, Main.ListT.bytesOf)
     ,
     bench "Data.ByteString.Builder" $ nf sample $
     (Data.ByteString.Builder.byteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString)
