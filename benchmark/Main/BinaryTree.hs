@@ -1,10 +1,10 @@
 module Main.BinaryTree where
 
 import Main.Prelude hiding (traverse_, fold, empty)
-import Foreign hiding (void)
-import Control.Monad.Primitive
+import Foreign hiding (poke, void)
 import qualified Data.ByteString as A
 import qualified Data.ByteString.Internal as B
+import qualified Main.Bytes as C
 
 
 newtype Builder =
@@ -90,9 +90,11 @@ bytesOf_thruList (Builder tree) =
 -- http://hackage.haskell.org/package/bytestring-0.10.6.0/docs/src/Data.ByteString.Internal.html#unsafeCreate
 bytesOf_explicitAllocation :: Builder -> Bytes
 bytesOf_explicitAllocation builder =
-  B.unsafeCreate (lengthOf builder) $ \ptr ->
-    void $
-    foldEachByte
-      (\ptrIO byte -> ptrIO >>= \ptr -> poke ptr byte >> pure (plusPtr ptr 1))
-      (pure ptr)
-      builder
+  B.unsafeCreate (lengthOf builder) $ void . poke builder
+
+poke :: Builder -> Ptr Word8 -> IO (Ptr Word8)
+poke (Builder tree) ptr =
+  case tree of
+    Void -> pure ptr
+    Leaf bytes -> C.poke bytes ptr
+    Branch tree1 tree2 -> poke (Builder tree1) ptr >>= poke (Builder tree2)
