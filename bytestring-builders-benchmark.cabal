@@ -49,6 +49,8 @@ executable benchmark
   build-depends:
     -- benchmarking:
     criterion == 1.1.*,
+    -- builders:
+    buffer-builder >= 0.2.4 && < 0.3,
     -- data:
     dlist == 0.7.*,
     vector == 0.11.*,

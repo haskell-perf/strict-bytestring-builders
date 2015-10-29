@@ -7,6 +7,7 @@ import qualified Main.BinaryTree
 import qualified Main.BinaryTreeWithSize
 import qualified Main.Concat
 import qualified Main.DList
+import qualified Main.BufferBuilderMonoid
 import qualified Data.ByteString.Builder
 import qualified Data.ByteString.Lazy
 import qualified Data.ByteString
@@ -15,6 +16,9 @@ import qualified Data.ByteString
 main =
   defaultMain
   [
+    bench "Main.BufferBuilderMonoid" $ nf sample $
+    (Main.BufferBuilderMonoid.bytes, mappend, Main.BufferBuilderMonoid.bytesOf)
+    ,
     bench "Main.Concat" $ nf sample $
     (Main.Concat.bytes, mappend, Main.Concat.bytesOf)
     ,
