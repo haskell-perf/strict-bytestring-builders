@@ -53,6 +53,7 @@ executable benchmark
     -- benchmarking:
     criterion == 1.1.*,
     -- data:
+    dlist == 0.7.*,
     vector == 0.11.*,
     bytestring >= 0.10.6 && < 0.11,
     -- general:

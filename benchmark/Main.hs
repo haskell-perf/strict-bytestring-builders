@@ -6,6 +6,7 @@ import Criterion.Main
 import qualified Main.BinaryTree
 import qualified Main.BinaryTreeWithSize
 import qualified Main.Concat
+import qualified Main.DList
 import qualified Data.ByteString.Builder
 import qualified Data.ByteString.Lazy
 import qualified Data.ByteString
@@ -14,6 +15,9 @@ import qualified Data.ByteString
 main =
   defaultMain
   [
+    bench "Main.DList, thru list" $ nf sample $
+    (Main.DList.bytes, mappend, Main.DList.bytesOf)
+    ,
     bench "Main.BinaryTree, thru list" $ nf sample $
     (Main.BinaryTree.bytes, Main.BinaryTree.append, Main.BinaryTree.bytesOf_thruList)
     ,
