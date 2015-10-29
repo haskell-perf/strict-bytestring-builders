@@ -79,8 +79,15 @@ foldEachByte step init (Builder tree) =
     Leaf bytes -> A.foldl' step init bytes
     Branch tree1 tree2 -> foldEachByte step (foldEachByte step init (Builder tree1)) (Builder tree2)
 
-bytesOf :: Builder -> Bytes
-bytesOf builder =
+bytesOf_thruList :: Builder -> Bytes
+bytesOf_thruList (Builder tree) =
+  mconcat (toList tree)
+
+-- |
+-- FIXME: Seriously needs some optimization!
+-- It must perform better than \"thruList\", not worse.
+bytesOf_explicitAllocation :: Builder -> Bytes
+bytesOf_explicitAllocation builder =
   runST $ do
     vector <- B.new (lengthOf builder)
     traverseEachByteWithIndex_ (\(index, byte) -> B.unsafeWrite vector index byte) builder

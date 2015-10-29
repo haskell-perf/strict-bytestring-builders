@@ -6,30 +6,37 @@ If you know any way of optimizing any particular benchmark or can suggest anothe
 
 # Current results
 
-    benchmarking Data.ByteString
-    time                 1.118 μs   (1.112 μs .. 1.124 μs)
-                         1.000 R²   (0.999 R² .. 1.000 R²)
-    mean                 1.117 μs   (1.114 μs .. 1.123 μs)
-    std dev              14.69 ns   (11.77 ns .. 20.30 ns)
-    variance introduced by outliers: 12% (moderately inflated)
-
-    benchmarking Data.ByteString.Builder
-    time                 1.612 μs   (1.561 μs .. 1.666 μs)
-                         0.994 R²   (0.991 R² .. 0.998 R²)
-    mean                 1.648 μs   (1.603 μs .. 1.691 μs)
-    std dev              156.9 ns   (124.3 ns .. 181.7 ns)
-    variance introduced by outliers: 87% (severely inflated)
-
-    benchmarking Main.BinaryTree
-    time                 1.282 μs   (1.276 μs .. 1.291 μs)
+    benchmarking Main.BinaryTree, thru list
+    time                 1.332 μs   (1.317 μs .. 1.350 μs)
                          0.999 R²   (0.998 R² .. 0.999 R²)
-    mean                 1.335 μs   (1.310 μs .. 1.363 μs)
-    std dev              111.7 ns   (83.96 ns .. 139.7 ns)
-    variance introduced by outliers: 85% (severely inflated)
+    mean                 1.341 μs   (1.327 μs .. 1.362 μs)
+    std dev              54.75 ns   (36.47 ns .. 89.02 ns)
+    variance introduced by outliers: 56% (severely inflated)
+
+    benchmarking Main.BinaryTree, explicit allocation
+    time                 9.009 μs   (8.940 μs .. 9.099 μs)
+                         0.999 R²   (0.999 R² .. 1.000 R²)
+    mean                 8.971 μs   (8.939 μs .. 9.033 μs)
+    std dev              153.0 ns   (118.0 ns .. 206.0 ns)
+    variance introduced by outliers: 15% (moderately inflated)
 
     benchmarking Main.BinaryTreeWithSize
-    time                 6.060 μs   (6.019 μs .. 6.122 μs)
-                         0.998 R²   (0.995 R² .. 0.999 R²)
-    mean                 6.207 μs   (6.106 μs .. 6.391 μs)
-    std dev              438.9 ns   (305.6 ns .. 602.6 ns)
-    variance introduced by outliers: 77% (severely inflated)
+    time                 6.167 μs   (6.016 μs .. 6.367 μs)
+                         0.995 R²   (0.991 R² .. 1.000 R²)
+    mean                 6.093 μs   (6.034 μs .. 6.235 μs)
+    std dev              297.8 ns   (142.9 ns .. 473.3 ns)
+    variance introduced by outliers: 61% (severely inflated)
+
+    benchmarking Data.ByteString.Builder
+    time                 1.563 μs   (1.549 μs .. 1.580 μs)
+                         0.999 R²   (0.999 R² .. 1.000 R²)
+    mean                 1.560 μs   (1.551 μs .. 1.572 μs)
+    std dev              33.13 ns   (22.65 ns .. 44.15 ns)
+    variance introduced by outliers: 25% (moderately inflated)
+
+    benchmarking Data.ByteString
+    time                 1.229 μs   (1.186 μs .. 1.284 μs)
+                         0.992 R²   (0.989 R² .. 0.998 R²)
+    mean                 1.234 μs   (1.208 μs .. 1.289 μs)
+    std dev              113.4 ns   (91.28 ns .. 167.2 ns)
+    variance introduced by outliers: 87% (severely inflated)

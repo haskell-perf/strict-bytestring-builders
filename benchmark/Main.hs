@@ -14,8 +14,11 @@ import qualified Data.ByteString
 main =
   defaultMain
   [
-    bench "Main.BinaryTree" $ nf sample $
-    (Main.BinaryTree.bytes, Main.BinaryTree.append, Main.BinaryTree.bytesOf)
+    bench "Main.BinaryTree, thru list" $ nf sample $
+    (Main.BinaryTree.bytes, Main.BinaryTree.append, Main.BinaryTree.bytesOf_thruList)
+    ,
+    bench "Main.BinaryTree, explicit allocation" $ nf sample $
+    (Main.BinaryTree.bytes, Main.BinaryTree.append, Main.BinaryTree.bytesOf_explicitAllocation)
     ,
     bench "Main.BinaryTreeWithSize" $ nf sample $
     (Main.BinaryTreeWithSize.bytes, Main.BinaryTreeWithSize.append, Main.BinaryTreeWithSize.bytesOf)
