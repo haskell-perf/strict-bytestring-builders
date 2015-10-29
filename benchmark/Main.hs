@@ -14,41 +14,54 @@ import qualified Data.ByteString
 
 
 main =
-  defaultMain
+  defaultMain $
+  map sampleGroup $
+  [("Small Input", smallSample), ("Large Input", largeSample)]
+    
+sampleGroup :: (String, Sample) -> Benchmark
+sampleGroup (title, sample) =
+  bgroup title
   [
     bench "Main.BufferBuilderMonoid" $ nf sample $
-    (Main.BufferBuilderMonoid.bytes, mappend, Main.BufferBuilderMonoid.bytesOf)
+    (Main.BufferBuilderMonoid.bytes, mappend, mempty, Main.BufferBuilderMonoid.bytesOf)
     ,
     bench "Main.Concat" $ nf sample $
-    (Main.Concat.bytes, mappend, Main.Concat.bytesOf)
+    (Main.Concat.bytes, mappend, mempty, Main.Concat.bytesOf)
     ,
     bench "Main.DList, thru list" $ nf sample $
-    (Main.DList.bytes, mappend, Main.DList.bytesOf)
+    (Main.DList.bytes, mappend, mempty, Main.DList.bytesOf)
     ,
     bench "Main.BinaryTree, thru list" $ nf sample $
-    (Main.BinaryTree.bytes, Main.BinaryTree.append, Main.BinaryTree.bytesOf_thruList)
+    (Main.BinaryTree.bytes, mappend, mempty, Main.BinaryTree.bytesOf_thruList)
     ,
     bench "Main.BinaryTree, explicit allocation" $ nf sample $
-    (Main.BinaryTree.bytes, Main.BinaryTree.append, Main.BinaryTree.bytesOf_explicitAllocation)
+    (Main.BinaryTree.bytes, mappend, mempty, Main.BinaryTree.bytesOf_explicitAllocation)
     ,
     bench "Main.BinaryTreeWithSize" $ nf sample $
-    (Main.BinaryTreeWithSize.bytes, Main.BinaryTreeWithSize.append, Main.BinaryTreeWithSize.bytesOf)
+    (Main.BinaryTreeWithSize.bytes, mappend, mempty, Main.BinaryTreeWithSize.bytesOf)
     ,
     bench "Data.ByteString.Builder" $ nf sample $
-    (
-      Data.ByteString.Builder.byteString,
-      (<>),
-      Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString
-    )
+    (Data.ByteString.Builder.byteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString)
     ,
-    bench "Data.ByteString" $ nf sample (id, (<>), id)
+    bench "Data.ByteString" $ nf sample (id, mappend, mempty, id)
   ]
 
+type Sample =
+  forall a. (Bytes -> a, a -> a -> a, a, a -> Bytes) -> Bytes
 
-{-# NOINLINE sample #-}
-sample :: (Bytes -> a, a -> a -> a, a -> Bytes) -> Bytes
-sample (fromBytes, (<>), toBytes) =
+{-# NOINLINE smallSample #-}
+smallSample :: Sample
+smallSample (fromBytes, (<>), mempty, toBytes) =
   toBytes $
+    (fromBytes "hello" <> fromBytes "asdf") <>
+    fromBytes "fsndfn" <>
+    (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
+
+{-# NOINLINE largeSample #-}
+largeSample :: Sample
+largeSample (fromBytes, (<>), mempty, toBytes) =
+  toBytes $
+  foldl' (<>) mempty $ replicate 1000 $
     (fromBytes "hello" <> fromBytes "asdf") <>
     fromBytes "fsndfn" <>
     (fromBytes "dfgknfg" <> fromBytes "aaaaaa")

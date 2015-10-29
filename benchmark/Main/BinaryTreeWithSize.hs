@@ -9,6 +9,10 @@ import qualified Data.Vector.Storable.Mutable as B
 data Builder =
   Builder !Int (BinaryTree Bytes)
 
+instance Monoid Builder where
+  mempty = empty
+  mappend = append
+
 data BinaryTree a =
   Void |
   Leaf a |
