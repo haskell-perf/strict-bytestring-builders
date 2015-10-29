@@ -52,6 +52,7 @@ executable benchmark
     -- builders:
     buffer-builder >= 0.2.4 && < 0.3,
     -- data:
+    containers >= 0.5 && < 0.6,
     dlist == 0.7.*,
     vector == 0.11.*,
     bytestring >= 0.10.6 && < 0.11,
