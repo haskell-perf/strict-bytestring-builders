@@ -2,7 +2,9 @@ module Main.BinaryTree where
 
 import Main.Prelude hiding (traverse_, fold, empty)
 import Foreign
+import Control.Monad.Primitive
 import qualified Data.ByteString as A
+import qualified Data.ByteString.Unsafe as A
 import qualified Data.Vector.Storable.Mutable as B
 
 
@@ -55,6 +57,42 @@ fold step init (Builder tree) =
     Leaf bytes -> step init bytes
     Branch tree1 tree2 -> fold step (fold step init (Builder tree1)) (Builder tree2)
 
-bytesOf :: Builder -> Bytes
-bytesOf (Builder tree) =
+traverseEachByte_ :: Applicative m => (Word8 -> m ()) -> Builder -> m ()
+traverseEachByte_ action (Builder tree) =
+  case tree of
+    Void -> pure ()
+    Leaf bytes -> A.foldl' (\acc byte -> acc *> action byte) (pure ()) bytes
+    Branch tree1 tree2 -> traverseEachByte_ action (Builder tree1) *> traverseEachByte_ action (Builder tree2)
+
+traverseEachByteWithIndex_ :: Applicative m => ((Int, Word8) -> m ()) -> Builder -> m ()
+traverseEachByteWithIndex_ action builder =
+  snd $
+  foldEachByte
+    (\(index, acc) byte -> (succ index, acc *> action (index, byte)))
+    (0, pure ())
+    builder
+
+foldEachByte :: (a -> Word8 -> a) -> a -> Builder -> a
+foldEachByte step init (Builder tree) =
+  case tree of
+    Void -> init
+    Leaf bytes -> A.foldl' step init bytes
+    Branch tree1 tree2 -> foldEachByte step (foldEachByte step init (Builder tree1)) (Builder tree2)
+
+bytesOf_thruList :: Builder -> Bytes
+bytesOf_thruList (Builder tree) =
   mconcat (toList tree)
+
+-- |
+-- FIXME: Seriously needs some optimization!
+-- It must perform better than \"thruList\", not worse.
+bytesOf_explicitAllocation :: Builder -> Bytes
+bytesOf_explicitAllocation builder =
+  runST $ do
+    vector <- B.new (lengthOf builder)
+    traverseEachByteWithIndex_ (\(index, byte) -> B.unsafeWrite vector index byte) builder
+    let (fptr, len) = B.unsafeToForeignPtr0 vector
+    unsafePrimToST $ withForeignPtr fptr $ \ptr ->
+      A.unsafePackCStringFinalizer ptr len
+        (finalizeForeignPtr fptr)
+
