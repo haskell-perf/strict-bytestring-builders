@@ -19,7 +19,7 @@ import qualified Data.ByteString
 main =
   defaultMain $
   map sampleGroup $
-  [("Small Input", smallSample), ("Large Input", largeSample)]
+  [("Small Input", smallSample), ("Medium Input", mediumSample), ("Large Input", largeSample)]
     
 sampleGroup :: (String, Sample) -> Benchmark
 sampleGroup (title, sample) =
@@ -63,11 +63,21 @@ smallSample (fromBytes, (<>), mempty, toBytes) =
     fromBytes "fsndfn" <>
     (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
 
+{-# NOINLINE mediumSample #-}
+mediumSample :: Sample
+mediumSample (fromBytes, (<>), mempty, toBytes) =
+  toBytes $
+  foldl' (<>) mempty $ replicate 1000 $
+    (fromBytes "hello" <> fromBytes "asdf") <>
+    fromBytes "fsndfn" <>
+    (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
+
+
 {-# NOINLINE largeSample #-}
 largeSample :: Sample
 largeSample (fromBytes, (<>), mempty, toBytes) =
   toBytes $
-  foldl' (<>) mempty $ replicate 1000 $
+  foldl' (<>) mempty $ replicate 1000000 $
     (fromBytes "hello" <> fromBytes "asdf") <>
     fromBytes "fsndfn" <>
     (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
