@@ -50,15 +50,6 @@ sampleGroup (title, sample) =
     (Data.ByteString.Builder.byteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString)
     ,
     bench "Data.ByteString" $ nf sample (id, mappend, mempty, id)
-    ,
-    bench "Main.Concat" $ nf sample $
-    (Main.Concat.bytes, mappend, mempty, Main.Concat.bytesOf)
-    ,
-    bench "List" $ nf sample $
-    (pure, mappend, mempty, mconcat)
-    ,
-    bench "Main.ListT" $ nf sample $
-    (Main.ListT.bytes, mappend, mempty, Main.ListT.bytesOf)
   ]
 
 type Sample =
