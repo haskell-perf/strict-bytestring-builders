@@ -6,157 +6,202 @@ If you know any way of optimizing any particular benchmark or can suggest anothe
 
 # Current results
 
+`BinaryTreeWithSize` is the winner on all input sizes. With the standard and "blaze" builders being at least 4 times slower.
+
     benchmarking Small Input/Main.BinaryTree, explicit allocation
-    time                 385.1 ns   (384.4 ns .. 385.9 ns)
-                         1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 385.3 ns   (384.7 ns .. 386.2 ns)
-    std dev              2.471 ns   (1.650 ns .. 3.651 ns)
+    time                 269.9 ns   (267.4 ns .. 273.9 ns)
+                         0.998 R²   (0.997 R² .. 0.999 R²)
+    mean                 272.3 ns   (269.8 ns .. 277.1 ns)
+    std dev              11.33 ns   (7.976 ns .. 14.69 ns)
+    variance introduced by outliers: 60% (severely inflated)
 
     benchmarking Small Input/Main.BinaryTree, thru list
-    time                 472.2 ns   (465.3 ns .. 480.2 ns)
-                         0.998 R²   (0.996 R² .. 1.000 R²)
-    mean                 470.6 ns   (466.9 ns .. 477.0 ns)
-    std dev              17.10 ns   (7.516 ns .. 26.99 ns)
-    variance introduced by outliers: 53% (severely inflated)
+    time                 393.7 ns   (379.5 ns .. 408.7 ns)
+                         0.991 R²   (0.989 R² .. 0.995 R²)
+    mean                 395.8 ns   (386.4 ns .. 406.1 ns)
+    std dev              32.83 ns   (28.37 ns .. 37.03 ns)
+    variance introduced by outliers: 86% (severely inflated)
 
     benchmarking Small Input/Main.BinaryTreeWithSize
-    time                 355.4 ns   (354.7 ns .. 356.2 ns)
-                         1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 355.9 ns   (354.7 ns .. 357.4 ns)
-    std dev              4.739 ns   (2.803 ns .. 6.846 ns)
-    variance introduced by outliers: 13% (moderately inflated)
+    time                 260.9 ns   (250.3 ns .. 274.5 ns)
+                         0.990 R²   (0.981 R² .. 1.000 R²)
+    mean                 254.1 ns   (250.6 ns .. 263.1 ns)
+    std dev              16.68 ns   (7.690 ns .. 29.93 ns)
+    variance introduced by outliers: 79% (severely inflated)
 
     benchmarking Small Input/Main.BufferBuilderMonoid
-    time                 1.166 μs   (1.162 μs .. 1.170 μs)
-                         1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 1.168 μs   (1.167 μs .. 1.169 μs)
-    std dev              4.448 ns   (3.065 ns .. 6.863 ns)
+    time                 1.208 μs   (1.195 μs .. 1.221 μs)
+                         1.000 R²   (0.999 R² .. 1.000 R²)
+    mean                 1.212 μs   (1.206 μs .. 1.215 μs)
+    std dev              13.02 ns   (7.003 ns .. 20.20 ns)
 
     benchmarking Small Input/Main.DListWithSize
-    time                 444.9 ns   (443.6 ns .. 447.0 ns)
-                         0.999 R²   (0.998 R² .. 1.000 R²)
-    mean                 457.4 ns   (450.6 ns .. 466.1 ns)
-    std dev              26.93 ns   (19.59 ns .. 34.01 ns)
+    time                 318.9 ns   (314.5 ns .. 325.7 ns)
+                         0.996 R²   (0.993 R² .. 1.000 R²)
+    mean                 319.5 ns   (315.0 ns .. 328.5 ns)
+    std dev              18.71 ns   (7.872 ns .. 29.38 ns)
     variance introduced by outliers: 75% (severely inflated)
 
     benchmarking Small Input/Main.DList
-    time                 549.2 ns   (547.3 ns .. 552.5 ns)
-                         1.000 R²   (0.999 R² .. 1.000 R²)
-    mean                 549.3 ns   (548.0 ns .. 552.0 ns)
-    std dev              6.871 ns   (3.008 ns .. 11.80 ns)
-    variance introduced by outliers: 11% (moderately inflated)
+    time                 484.0 ns   (470.1 ns .. 500.8 ns)
+                         0.995 R²   (0.990 R² .. 1.000 R²)
+    mean                 474.0 ns   (469.1 ns .. 485.1 ns)
+    std dev              24.29 ns   (14.89 ns .. 40.36 ns)
+    variance introduced by outliers: 69% (severely inflated)
 
     benchmarking Small Input/Main.Seq
-    time                 564.3 ns   (557.3 ns .. 575.1 ns)
-                         0.998 R²   (0.995 R² .. 1.000 R²)
-    mean                 561.7 ns   (557.3 ns .. 573.2 ns)
-    std dev              22.16 ns   (10.56 ns .. 39.85 ns)
-    variance introduced by outliers: 56% (severely inflated)
+    time                 448.6 ns   (440.9 ns .. 460.3 ns)
+                         0.995 R²   (0.992 R² .. 0.997 R²)
+    mean                 474.1 ns   (465.8 ns .. 489.4 ns)
+    std dev              38.52 ns   (27.76 ns .. 55.96 ns)
+    variance introduced by outliers: 85% (severely inflated)
+
+    benchmarking Small Input/Blaze.ByteString.Builder
+    time                 923.1 ns   (896.9 ns .. 952.0 ns)
+                         0.994 R²   (0.990 R² .. 0.999 R²)
+    mean                 929.9 ns   (909.9 ns .. 965.5 ns)
+    std dev              88.09 ns   (62.70 ns .. 128.7 ns)
+    variance introduced by outliers: 88% (severely inflated)
 
     benchmarking Small Input/Data.ByteString.Builder
-    time                 1.212 μs   (1.181 μs .. 1.259 μs)
-                         0.993 R²   (0.989 R² .. 0.996 R²)
-    mean                 1.228 μs   (1.197 μs .. 1.259 μs)
-    std dev              107.5 ns   (89.01 ns .. 131.7 ns)
-    variance introduced by outliers: 86% (severely inflated)
+    time                 989.2 ns   (962.5 ns .. 1.021 μs)
+                         0.993 R²   (0.990 R² .. 0.997 R²)
+    mean                 994.1 ns   (974.9 ns .. 1.022 μs)
+    std dev              81.83 ns   (66.86 ns .. 98.23 ns)
+    variance introduced by outliers: 85% (severely inflated)
 
     benchmarking Small Input/Data.ByteString
-    time                 408.0 ns   (395.1 ns .. 420.5 ns)
-                         0.995 R²   (0.993 R² .. 0.998 R²)
-    mean                 394.4 ns   (389.2 ns .. 402.7 ns)
-    std dev              21.40 ns   (14.09 ns .. 29.41 ns)
-    variance introduced by outliers: 72% (severely inflated)
+    time                 282.2 ns   (278.6 ns .. 287.5 ns)
+                         0.996 R²   (0.993 R² .. 0.999 R²)
+    mean                 293.6 ns   (287.7 ns .. 305.0 ns)
+    std dev              25.43 ns   (20.37 ns .. 30.77 ns)
+    variance introduced by outliers: 87% (severely inflated)
 
-    benchmarking Small Input/Main.Concat
-    time                 891.7 ns   (888.8 ns .. 895.4 ns)
+    benchmarking Medium Input/Main.BinaryTree, explicit allocation
+    time                 171.6 μs   (170.0 μs .. 173.7 μs)
+                         0.999 R²   (0.999 R² .. 1.000 R²)
+    mean                 170.2 μs   (169.6 μs .. 171.1 μs)
+    std dev              2.384 μs   (1.509 μs .. 3.294 μs)
+
+    benchmarking Medium Input/Main.BinaryTree, thru list
+    time                 439.0 μs   (437.8 μs .. 440.2 μs)
                          1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 892.5 ns   (889.9 ns .. 897.3 ns)
-    std dev              11.73 ns   (8.259 ns .. 17.31 ns)
+    mean                 438.9 μs   (438.1 μs .. 439.9 μs)
+    std dev              2.873 μs   (2.139 μs .. 4.169 μs)
+
+    benchmarking Medium Input/Main.BinaryTreeWithSize
+    time                 94.80 μs   (93.89 μs .. 96.05 μs)
+                         0.999 R²   (0.997 R² .. 1.000 R²)
+    mean                 94.67 μs   (94.00 μs .. 95.67 μs)
+    std dev              2.801 μs   (1.610 μs .. 3.861 μs)
+    variance introduced by outliers: 28% (moderately inflated)
+
+    benchmarking Medium Input/Main.BufferBuilderMonoid
+    time                 199.9 μs   (198.0 μs .. 201.8 μs)
+                         0.999 R²   (0.999 R² .. 1.000 R²)
+    mean                 198.0 μs   (196.8 μs .. 199.4 μs)
+    std dev              3.758 μs   (2.998 μs .. 5.467 μs)
     variance introduced by outliers: 12% (moderately inflated)
 
-    benchmarking Small Input/List
-    time                 451.5 ns   (450.2 ns .. 452.8 ns)
+    benchmarking Medium Input/Main.DListWithSize
+    time                 206.2 μs   (205.4 μs .. 206.9 μs)
                          1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 451.2 ns   (450.3 ns .. 452.6 ns)
-    std dev              3.840 ns   (3.027 ns .. 5.234 ns)
+    mean                 206.2 μs   (206.0 μs .. 206.5 μs)
+    std dev              993.9 ns   (768.1 ns .. 1.276 μs)
 
-    benchmarking Small Input/Main.ListT
-    time                 929.6 ns   (918.0 ns .. 946.4 ns)
-                         0.998 R²   (0.996 R² .. 1.000 R²)
-    mean                 928.0 ns   (919.3 ns .. 943.3 ns)
-    std dev              37.83 ns   (18.57 ns .. 57.19 ns)
-    variance introduced by outliers: 57% (severely inflated)
+    benchmarking Medium Input/Main.DList
+    time                 481.7 μs   (480.8 μs .. 482.5 μs)
+                         1.000 R²   (1.000 R² .. 1.000 R²)
+    mean                 482.0 μs   (481.0 μs .. 482.8 μs)
+    std dev              2.831 μs   (2.285 μs .. 3.672 μs)
+
+    benchmarking Medium Input/Main.Seq
+    time                 711.1 μs   (702.5 μs .. 721.1 μs)
+                         0.999 R²   (0.999 R² .. 1.000 R²)
+    mean                 709.1 μs   (707.1 μs .. 712.5 μs)
+    std dev              8.932 μs   (6.284 μs .. 15.01 μs)
+
+    benchmarking Medium Input/Blaze.ByteString.Builder
+    time                 361.3 μs   (358.1 μs .. 364.6 μs)
+                         1.000 R²   (0.999 R² .. 1.000 R²)
+    mean                 357.9 μs   (357.0 μs .. 359.3 μs)
+    std dev              3.851 μs   (2.823 μs .. 5.536 μs)
+
+    benchmarking Medium Input/Data.ByteString.Builder
+    time                 355.7 μs   (354.5 μs .. 357.0 μs)
+                         0.999 R²   (0.999 R² .. 1.000 R²)
+    mean                 359.4 μs   (357.7 μs .. 364.3 μs)
+    std dev              10.20 μs   (6.953 μs .. 17.58 μs)
+    variance introduced by outliers: 21% (moderately inflated)
+
+    benchmarking Medium Input/Data.ByteString
+    time                 2.286 ms   (2.218 ms .. 2.376 ms)
+                         0.989 R²   (0.981 R² .. 0.997 R²)
+    mean                 2.242 ms   (2.213 ms .. 2.293 ms)
+    std dev              123.1 μs   (78.48 μs .. 179.6 μs)
+    variance introduced by outliers: 38% (moderately inflated)
 
     benchmarking Large Input/Main.BinaryTree, explicit allocation
-    time                 96.18 μs   (96.12 μs .. 96.24 μs)
-                         1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 96.21 μs   (96.15 μs .. 96.27 μs)
-    std dev              220.1 ns   (174.8 ns .. 325.3 ns)
+    time                 29.92 ms   (29.30 ms .. 30.40 ms)
+                         0.999 R²   (0.998 R² .. 1.000 R²)
+    mean                 30.23 ms   (30.10 ms .. 30.47 ms)
+    std dev              376.5 μs   (206.4 μs .. 610.2 μs)
 
     benchmarking Large Input/Main.BinaryTree, thru list
-    time                 425.5 μs   (423.0 μs .. 428.7 μs)
-                         1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 424.5 μs   (423.3 μs .. 426.0 μs)
-    std dev              3.843 μs   (2.309 μs .. 5.383 μs)
+    time                 97.03 ms   (93.81 ms .. 101.3 ms)
+                         0.997 R²   (0.993 R² .. 0.999 R²)
+    mean                 97.42 ms   (94.66 ms .. 99.62 ms)
+    std dev              3.943 ms   (2.090 ms .. 5.617 ms)
 
     benchmarking Large Input/Main.BinaryTreeWithSize
-    time                 99.63 μs   (99.54 μs .. 99.73 μs)
-                         1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 99.55 μs   (99.45 μs .. 99.64 μs)
-    std dev              317.2 ns   (237.0 ns .. 451.6 ns)
+    time                 20.99 ms   (20.79 ms .. 21.18 ms)
+                         1.000 R²   (0.999 R² .. 1.000 R²)
+    mean                 21.09 ms   (21.02 ms .. 21.18 ms)
+    std dev              175.5 μs   (127.2 μs .. 261.1 μs)
 
     benchmarking Large Input/Main.BufferBuilderMonoid
-    time                 192.2 μs   (192.1 μs .. 192.3 μs)
-                         1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 192.4 μs   (192.3 μs .. 192.5 μs)
-    std dev              402.0 ns   (330.0 ns .. 506.9 ns)
+    time                 43.23 ms   (42.80 ms .. 43.73 ms)
+                         0.999 R²   (0.999 R² .. 1.000 R²)
+    mean                 43.09 ms   (42.76 ms .. 43.52 ms)
+    std dev              726.4 μs   (520.8 μs .. 1.087 ms)
 
     benchmarking Large Input/Main.DListWithSize
-    time                 248.9 μs   (248.6 μs .. 249.2 μs)
-                         1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 249.0 μs   (248.8 μs .. 249.3 μs)
-    std dev              808.4 ns   (617.7 ns .. 1.213 μs)
+    time                 89.65 ms   (87.41 ms .. 94.71 ms)
+                         0.996 R²   (0.988 R² .. 1.000 R²)
+    mean                 89.09 ms   (87.94 ms .. 91.51 ms)
+    std dev              2.516 ms   (654.2 μs .. 4.433 ms)
 
     benchmarking Large Input/Main.DList
-    time                 448.0 μs   (447.4 μs .. 448.9 μs)
-                         1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 449.0 μs   (448.2 μs .. 450.7 μs)
-    std dev              3.696 μs   (2.723 μs .. 5.718 μs)
+    time                 106.6 ms   (105.2 ms .. 107.9 ms)
+                         1.000 R²   (0.998 R² .. 1.000 R²)
+    mean                 108.1 ms   (107.2 ms .. 109.3 ms)
+    std dev              1.675 ms   (1.178 ms .. 2.273 ms)
 
     benchmarking Large Input/Main.Seq
-    time                 707.9 μs   (702.5 μs .. 717.9 μs)
+    time                 178.6 ms   (170.9 ms .. 195.6 ms)
+                         0.995 R²   (0.989 R² .. 1.000 R²)
+    mean                 175.4 ms   (171.9 ms .. 181.3 ms)
+    std dev              6.040 ms   (3.019 ms .. 8.736 ms)
+    variance introduced by outliers: 12% (moderately inflated)
+
+    benchmarking Large Input/Blaze.ByteString.Builder
+    time                 115.8 ms   (114.1 ms .. 118.5 ms)
                          1.000 R²   (0.999 R² .. 1.000 R²)
-    mean                 704.5 μs   (703.4 μs .. 706.5 μs)
-    std dev              5.989 μs   (3.098 μs .. 9.415 μs)
+    mean                 115.5 ms   (114.6 ms .. 116.3 ms)
+    std dev              1.211 ms   (983.4 μs .. 1.472 ms)
+    variance introduced by outliers: 11% (moderately inflated)
 
     benchmarking Large Input/Data.ByteString.Builder
-    time                 329.8 μs   (329.3 μs .. 330.4 μs)
-                         1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 330.1 μs   (329.4 μs .. 331.0 μs)
-    std dev              2.749 μs   (1.685 μs .. 4.405 μs)
+    time                 119.5 ms   (116.8 ms .. 126.2 ms)
+                         0.996 R²   (0.988 R² .. 1.000 R²)
+    mean                 116.4 ms   (114.7 ms .. 121.5 ms)
+    std dev              3.785 ms   (1.225 ms .. 5.842 ms)
+    variance introduced by outliers: 11% (moderately inflated)
 
     benchmarking Large Input/Data.ByteString
-    time                 2.727 ms   (2.703 ms .. 2.751 ms)
-                         1.000 R²   (0.999 R² .. 1.000 R²)
-    mean                 2.717 ms   (2.709 ms .. 2.733 ms)
-    std dev              35.75 μs   (26.11 μs .. 58.92 μs)
-
-    benchmarking Large Input/Main.Concat
-    time                 7.357 ms   (7.326 ms .. 7.399 ms)
+    time                 15.13 s    (14.93 s .. NaN s)
                          1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 7.314 ms   (7.294 ms .. 7.338 ms)
-    std dev              68.38 μs   (53.43 μs .. 99.53 μs)
-
-    benchmarking Large Input/List
-    time                 50.24 ms   (50.03 ms .. 50.45 ms)
-                         1.000 R²   (1.000 R² .. 1.000 R²)
-    mean                 49.89 ms   (49.57 ms .. 50.04 ms)
-    std dev              430.6 μs   (139.3 μs .. 593.1 μs)
-
-    benchmarking Large Input/Main.ListT
-    time                 112.8 ms   (110.4 ms .. 118.1 ms)
-                         0.998 R²   (0.989 R² .. 1.000 R²)
-    mean                 112.6 ms   (111.4 ms .. 115.7 ms)
-    std dev              2.536 ms   (288.9 μs .. 3.694 ms)
-    variance introduced by outliers: 11% (moderately inflated)
+    mean                 14.69 s    (14.53 s .. 14.82 s)
+    std dev              184.5 ms   (0.0 s .. 210.4 ms)
+    variance introduced by outliers: 19% (moderately inflated)
 

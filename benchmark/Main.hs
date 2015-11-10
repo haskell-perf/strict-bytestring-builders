@@ -14,6 +14,7 @@ import qualified Main.ListT
 import qualified Data.ByteString.Builder
 import qualified Data.ByteString.Lazy
 import qualified Data.ByteString
+import qualified Blaze.ByteString.Builder
 
 
 main =
@@ -46,6 +47,9 @@ sampleGroup (title, sample) =
     bench "Main.Seq" $ nf sample $
     (Main.Seq.bytes, mappend, mempty, Main.Seq.bytesOf)
     ,
+    bench "Blaze.ByteString.Builder" $ nf sample $
+    (Blaze.ByteString.Builder.fromByteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Blaze.ByteString.Builder.toLazyByteString)
+    ,
     bench "Data.ByteString.Builder" $ nf sample $
     (Data.ByteString.Builder.byteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString)
     ,
@@ -77,7 +81,7 @@ mediumSample (fromBytes, (<>), mempty, toBytes) =
 largeSample :: Sample
 largeSample (fromBytes, (<>), mempty, toBytes) =
   toBytes $
-  foldl' (<>) mempty $ replicate 1000000 $
+  foldl' (<>) mempty $ replicate 100000 $
     (fromBytes "hello" <> fromBytes "asdf") <>
     fromBytes "fsndfn" <>
     (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
