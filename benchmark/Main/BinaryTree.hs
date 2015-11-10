@@ -82,12 +82,6 @@ bytesOf_thruList :: Builder -> Bytes
 bytesOf_thruList (Builder tree) =
   mconcat (toList tree)
 
--- |
--- FIXME: Seriously needs some optimization!
--- It must perform better than \"thruList\", not worse.
--- 
--- See
--- http://hackage.haskell.org/package/bytestring-0.10.6.0/docs/src/Data.ByteString.Internal.html#unsafeCreate
 bytesOf_explicitAllocation :: Builder -> Bytes
 bytesOf_explicitAllocation builder =
   B.unsafeCreate (lengthOf builder) $ void . poke builder

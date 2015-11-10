@@ -39,12 +39,6 @@ lengthOf :: Builder -> Int
 lengthOf (Builder length tree) =
   length
 
--- |
--- FIXME: Seriously needs some optimization!
--- It must perform better than \"thruList\", not worse.
--- 
--- See
--- http://hackage.haskell.org/package/bytestring-0.10.6.0/docs/src/Data.ByteString.Internal.html#unsafeCreate
 bytesOf :: Builder -> Bytes
 bytesOf (Builder length tree) =
   B.unsafeCreate length $ void . pokeTree tree
