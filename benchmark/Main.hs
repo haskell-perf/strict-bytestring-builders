@@ -3,6 +3,8 @@ module Main where
 import Main.Prelude
 import Control.DeepSeq
 import Criterion.Main
+import qualified Main.StrictBinaryTreeWithSize
+import qualified Main.StrictBinaryTree
 import qualified Main.BinaryTree
 import qualified Main.BinaryTreeWithSize
 import qualified Main.Concat
@@ -26,11 +28,14 @@ sampleGroup :: (String, Sample) -> Benchmark
 sampleGroup (title, sample) =
   bgroup title
   [
-    bench "Main.BinaryTree, explicit allocation" $ nf sample $
-    (Main.BinaryTree.bytes, mappend, mempty, Main.BinaryTree.bytesOf_explicitAllocation)
+    bench "Main.StrictBinaryTree" $ nf sample $
+    (Main.StrictBinaryTree.bytes, mappend, mempty, Main.StrictBinaryTree.bytesOf_explicitAllocation)
     ,
-    bench "Main.BinaryTree, thru list" $ nf sample $
-    (Main.BinaryTree.bytes, mappend, mempty, Main.BinaryTree.bytesOf_thruList)
+    bench "Main.StrictBinaryTreeWithSize" $ nf sample $
+    (Main.StrictBinaryTreeWithSize.bytes, mappend, mempty, Main.StrictBinaryTreeWithSize.bytesOf)
+    ,
+    bench "Main.BinaryTree" $ nf sample $
+    (Main.BinaryTree.bytes, mappend, mempty, Main.BinaryTree.bytesOf_explicitAllocation)
     ,
     bench "Main.BinaryTreeWithSize" $ nf sample $
     (Main.BinaryTreeWithSize.bytes, mappend, mempty, Main.BinaryTreeWithSize.bytesOf)
