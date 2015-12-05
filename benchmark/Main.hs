@@ -17,6 +17,7 @@ import qualified Data.ByteString.Builder
 import qualified Data.ByteString.Lazy
 import qualified Data.ByteString
 import qualified Blaze.ByteString.Builder
+import qualified ByteString.TreeBuilder
 
 
 main =
@@ -28,6 +29,9 @@ sampleGroup :: (String, Sample) -> Benchmark
 sampleGroup (title, sample) =
   bgroup title
   [
+    bench "ByteString.TreeBuilder" $ nf sample $
+    (ByteString.TreeBuilder.byteString, mappend, mempty, ByteString.TreeBuilder.toByteString)
+    ,
     bench "Main.StrictBinaryTree" $ nf sample $
     (Main.StrictBinaryTree.bytes, mappend, mempty, Main.StrictBinaryTree.bytesOf_explicitAllocation)
     ,
