@@ -3,10 +3,6 @@ module Main where
 import Main.Prelude
 import Control.DeepSeq
 import Criterion.Main
-import qualified Main.StrictBinaryTreeWithSize
-import qualified Main.StrictBinaryTree
-import qualified Main.BinaryTree
-import qualified Main.BinaryTreeWithSize
 import qualified Main.Concat
 import qualified Main.DList
 import qualified Main.DListWithSize
@@ -31,18 +27,6 @@ sampleGroup (title, sample) =
   [
     bench "ByteString.TreeBuilder" $ nf sample $
     (ByteString.TreeBuilder.byteString, mappend, mempty, ByteString.TreeBuilder.toByteString)
-    ,
-    bench "Main.StrictBinaryTree" $ nf sample $
-    (Main.StrictBinaryTree.bytes, mappend, mempty, Main.StrictBinaryTree.bytesOf_explicitAllocation)
-    ,
-    bench "Main.StrictBinaryTreeWithSize" $ nf sample $
-    (Main.StrictBinaryTreeWithSize.bytes, mappend, mempty, Main.StrictBinaryTreeWithSize.bytesOf)
-    ,
-    bench "Main.BinaryTree" $ nf sample $
-    (Main.BinaryTree.bytes, mappend, mempty, Main.BinaryTree.bytesOf_explicitAllocation)
-    ,
-    bench "Main.BinaryTreeWithSize" $ nf sample $
-    (Main.BinaryTreeWithSize.bytes, mappend, mempty, Main.BinaryTreeWithSize.bytesOf)
     ,
     bench "Main.BufferBuilderMonoid" $ nf sample $
     (Main.BufferBuilderMonoid.bytes, mappend, mempty, Main.BufferBuilderMonoid.bytesOf)
