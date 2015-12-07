@@ -1,12 +1,12 @@
 # Summary
 
-This project exists purely for research purposes of determining the optimal way of building strict bytestrings. As a result of this project some library may be released (depending on the outcome). The ideas behind this project stem from [a discussion on Reddit](https://www.reddit.com/r/haskell/comments/3qj53a/an_alternative_bytestring_builder/).
+This project exists purely for research purposes of determining the optimal way of building strict bytestrings. The ideas behind this project stem from [a discussion on Reddit](https://www.reddit.com/r/haskell/comments/3qj53a/an_alternative_bytestring_builder/).
 
 If you know any way of optimizing any particular benchmark or can suggest another benchmark subject, instead of complaining, PR without hesitation! This is intended to be a community project.
 
 # Current results
 
-`ByteString.TreeBuilder` is the clear winner. With the standard and "blaze" builders being at least 4 times slower on all input sizes.
+[`ByteString.TreeBuilder`](https://github.com/nikita-volkov/bytestring-tree-builder) is the clear winner. With the standard and "blaze" builders being at least 4 times slower on all input sizes.
 
     benchmarking Small Input/ByteString.TreeBuilder
     time                 246.3 ns   (245.9 ns .. 246.8 ns)
