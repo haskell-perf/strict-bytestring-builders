@@ -104,7 +104,13 @@ largeFoldr (fromBytes, (<>), mempty, toBytes, _) =
 largeMconcat :: Sample
 largeMconcat (fromBytes, (<>), mempty, toBytes, mconcat) =
   toBytes $
-  mconcat $ replicate 100000 $
-    (fromBytes "hello" <> fromBytes "asdf") <>
-    fromBytes "fsndfn" <>
-    (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
+  mconcat $
+  map fromBytes $
+  mconcatInput
+
+{-# NOINLINE mconcatInput #-}
+mconcatInput :: [Bytes]
+mconcatInput =
+  fold $ 
+  replicate 100000 $
+  ["hello", "asdf", "fsndfn", "dfgknfg", "aaaaaa"]
