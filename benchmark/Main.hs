@@ -19,42 +19,45 @@ import qualified ByteString.TreeBuilder
 main =
   defaultMain $
   map sampleGroup $
-  [("Small Input", smallSample), ("Medium Input", mediumSample), ("Large Input", largeSample)]
+  [("Small Input", smallSample), ("Medium Input", mediumSample), ("Large Input", largeSample)
+  ,("Large + foldr", largeFoldr)
+  ,("Large + mconcat", largeFoldr)
+  ]
     
 sampleGroup :: (String, Sample) -> Benchmark
 sampleGroup (title, sample) =
   bgroup title
   [
     bench "ByteString.TreeBuilder" $ nf sample $
-    (ByteString.TreeBuilder.byteString, mappend, mempty, ByteString.TreeBuilder.toByteString)
+    (ByteString.TreeBuilder.byteString, mappend, mempty, ByteString.TreeBuilder.toByteString, mconcat)
     ,
     bench "Main.BufferBuilderMonoid" $ nf sample $
-    (Main.BufferBuilderMonoid.bytes, mappend, mempty, Main.BufferBuilderMonoid.bytesOf)
+    (Main.BufferBuilderMonoid.bytes, mappend, mempty, Main.BufferBuilderMonoid.bytesOf, mconcat)
     ,
     bench "Main.DListWithSize" $ nf sample $
-    (Main.DListWithSize.bytes, mappend, mempty, Main.DListWithSize.bytesOf)
+    (Main.DListWithSize.bytes, mappend, mempty, Main.DListWithSize.bytesOf, mconcat)
     ,
     bench "Main.DList" $ nf sample $
-    (Main.DList.bytes, mappend, mempty, Main.DList.bytesOf)
+    (Main.DList.bytes, mappend, mempty, Main.DList.bytesOf, mconcat)
     ,
     bench "Main.Seq" $ nf sample $
-    (Main.Seq.bytes, mappend, mempty, Main.Seq.bytesOf)
+    (Main.Seq.bytes, mappend, mempty, Main.Seq.bytesOf, mconcat)
     ,
     bench "Blaze.ByteString.Builder" $ nf sample $
-    (Blaze.ByteString.Builder.fromByteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Blaze.ByteString.Builder.toLazyByteString)
+    (Blaze.ByteString.Builder.fromByteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Blaze.ByteString.Builder.toLazyByteString, mconcat)
     ,
     bench "Data.ByteString.Builder" $ nf sample $
-    (Data.ByteString.Builder.byteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString)
+    (Data.ByteString.Builder.byteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString, mconcat)
     ,
-    bench "Data.ByteString" $ nf sample (id, mappend, mempty, id)
+    bench "Data.ByteString" $ nf sample (id, mappend, mempty, id, mconcat)
   ]
 
 type Sample =
-  forall a. (Bytes -> a, a -> a -> a, a, a -> Bytes) -> Bytes
+  forall a. (Bytes -> a, a -> a -> a, a, a -> Bytes, [a] -> a) -> Bytes
 
 {-# NOINLINE smallSample #-}
 smallSample :: Sample
-smallSample (fromBytes, (<>), mempty, toBytes) =
+smallSample (fromBytes, (<>), mempty, toBytes, _) =
   toBytes $
     (fromBytes "hello" <> fromBytes "asdf") <>
     fromBytes "fsndfn" <>
@@ -62,7 +65,7 @@ smallSample (fromBytes, (<>), mempty, toBytes) =
 
 {-# NOINLINE mediumSample #-}
 mediumSample :: Sample
-mediumSample (fromBytes, (<>), mempty, toBytes) =
+mediumSample (fromBytes, (<>), mempty, toBytes, _) =
   toBytes $
   foldl' (<>) mempty $ replicate 1000 $
     (fromBytes "hello" <> fromBytes "asdf") <>
@@ -72,10 +75,28 @@ mediumSample (fromBytes, (<>), mempty, toBytes) =
 
 {-# NOINLINE largeSample #-}
 largeSample :: Sample
-largeSample (fromBytes, (<>), mempty, toBytes) =
+largeSample (fromBytes, (<>), mempty, toBytes, _) =
   toBytes $
   foldl' (<>) mempty $ replicate 100000 $
     (fromBytes "hello" <> fromBytes "asdf") <>
     fromBytes "fsndfn" <>
     (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
 
+
+{-# NOINLINE largeFoldr #-}
+largeFoldr :: Sample
+largeFoldr (fromBytes, (<>), mempty, toBytes, _) =
+  toBytes $
+  foldr (<>) mempty $ replicate 100000 $
+    (fromBytes "hello" <> fromBytes "asdf") <>
+    fromBytes "fsndfn" <>
+    (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
+
+{-# NOINLINE largeMconcat #-}
+largeMconcat :: Sample
+largeMconcat (fromBytes, (<>), mempty, toBytes, mconcat) =
+  toBytes $
+  mconcat $ replicate 100000 $
+    (fromBytes "hello" <> fromBytes "asdf") <>
+    fromBytes "fsndfn" <>
+    (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
