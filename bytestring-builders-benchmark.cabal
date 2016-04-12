@@ -52,7 +52,7 @@ executable benchmark
     -- builders:
     blaze-builder >= 0.4.0.1 && < 0.5,
     buffer-builder >= 0.2.4 && < 0.3,
-    bytestring-tree-builder >= 0.2.1 && < 0.3,
+    bytestring-tree-builder >= 0.2.6 && < 0.3,
     -- data:
     containers >= 0.5 && < 0.6,
     dlist == 0.7.*,

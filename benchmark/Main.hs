@@ -19,14 +19,21 @@ import qualified ByteString.TreeBuilder
 main =
   defaultMain $
   map sampleGroup $
-  [("Small Input", smallSample), ("Medium Input", mediumSample), ("Large Input", largeSample)
-  ,("Large + foldr", largeFoldr)
-  ,("Large + mconcat", largeFoldr)
+  [
+    ("Small Input", smallSample, True)
+    ,
+    ("Medium Input", mediumSample, True)
+    ,
+    ("Large Input", largeSample, False)
+    ,
+    ("Large Input/foldr", largeFoldr, False)
+    ,
+    ("Large Input/mconcat", largeFoldr, False)
   ]
     
-sampleGroup :: (String, Sample) -> Benchmark
-sampleGroup (title, sample) =
-  bgroup title
+sampleGroup :: (String, Sample, Bool) -> Benchmark
+sampleGroup (title, sample, measureByteString) =
+  bgroup title $
   [
     bench "ByteString.TreeBuilder" $ nf sample $
     (ByteString.TreeBuilder.byteString, mappend, mempty, ByteString.TreeBuilder.toByteString, mconcat)
@@ -48,9 +55,10 @@ sampleGroup (title, sample) =
     ,
     bench "Data.ByteString.Builder" $ nf sample $
     (Data.ByteString.Builder.byteString, mappend, mempty, Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString, mconcat)
-    ,
-    bench "Data.ByteString" $ nf sample (id, mappend, mempty, id, mconcat)
-  ]
+  ] <>
+  if measureByteString
+    then [bench "Data.ByteString" $ nf sample (id, mappend, mempty, id, mconcat)]
+    else []
 
 type Sample =
   forall a. (Bytes -> a, a -> a -> a, a, a -> Bytes, [a] -> a) -> Bytes
