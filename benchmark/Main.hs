@@ -36,21 +36,6 @@ sampleGroup title sample measureByteString =
     subjectBench "ByteString.TreeBuilder" $
     Subject ByteString.TreeBuilder.byteString mappend mempty ByteString.TreeBuilder.toByteString mconcat
     ,
-    subjectBench "Main.BufferBuilderMonoid" $
-    Subject Main.BufferBuilderMonoid.bytes mappend mempty Main.BufferBuilderMonoid.bytesOf mconcat
-    ,
-    subjectBench "Main.DListWithSize" $
-    Subject Main.DListWithSize.bytes mappend mempty Main.DListWithSize.bytesOf mconcat
-    ,
-    subjectBench "Main.DList" $
-    Subject Main.DList.bytes mappend mempty Main.DList.bytesOf mconcat
-    ,
-    subjectBench "Main.Seq" $
-    Subject Main.Seq.bytes mappend mempty Main.Seq.bytesOf mconcat
-    ,
-    subjectBench "Blaze.ByteString.Builder" $
-    Subject Blaze.ByteString.Builder.fromByteString mappend mempty (Data.ByteString.Lazy.toStrict . Blaze.ByteString.Builder.toLazyByteString) mconcat
-    ,
     subjectBench "Data.ByteString.Builder" $
     Subject Data.ByteString.Builder.byteString mappend mempty (Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString) mconcat
   ] <>
