@@ -61,6 +61,7 @@ executable benchmark
     blaze-builder >= 0.4.0.1 && < 0.5,
     buffer-builder >= 0.2.4 && < 0.3,
     bytestring-tree-builder >= 0.2.6 && < 0.3,
+    strict-bytes-builder == 0.1.*,
     -- general:
     primitive >= 0.6 && < 0.7,
     rerebase == 1.*

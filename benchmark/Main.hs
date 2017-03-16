@@ -13,6 +13,7 @@ import qualified Data.ByteString.Lazy
 import qualified Data.ByteString
 import qualified Blaze.ByteString.Builder
 import qualified ByteString.TreeBuilder
+import qualified StrictBytesBuilder
 
 
 main =
@@ -33,11 +34,17 @@ sampleGroup :: String -> Sample -> Bool -> Benchmark
 sampleGroup title sample measureByteString =
   bgroup title $
   [
+    subjectBench "StrictBytesBuilder" $
+    Subject StrictBytesBuilder.bytes mappend mempty StrictBytesBuilder.run mconcat
+    ,
     subjectBench "ByteString.TreeBuilder" $
     Subject ByteString.TreeBuilder.byteString mappend mempty ByteString.TreeBuilder.toByteString mconcat
     ,
     subjectBench "Data.ByteString.Builder" $
     Subject Data.ByteString.Builder.byteString mappend mempty (Data.ByteString.Lazy.toStrict . Data.ByteString.Builder.toLazyByteString) mconcat
+    ,
+    subjectBench "Main.BufferBuilderMonoid" $
+    Subject Main.BufferBuilderMonoid.bytes mappend mempty Main.BufferBuilderMonoid.bytesOf mconcat
   ] <>
   if measureByteString
     then [subjectBench "Data.ByteString" (Subject id mappend mempty id mconcat)]
