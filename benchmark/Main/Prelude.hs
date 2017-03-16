@@ -8,13 +8,9 @@ module Main.Prelude
 where
 
 
--- base-prelude
+-- rerebase
 -------------------------
-import BasePrelude as Exports hiding (assert, left, right, isLeft, isRight, error)
-
--- mtl-prelude
--------------------------
-import MTLPrelude as Exports hiding (shift)
+import Prelude as Exports hiding (assert, left, right, isLeft, isRight, error)
 
 -- custom
 -------------------------
