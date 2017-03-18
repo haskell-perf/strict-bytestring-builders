@@ -13,7 +13,7 @@ import qualified Data.ByteString.Lazy
 import qualified Data.ByteString
 import qualified Blaze.ByteString.Builder
 import qualified ByteString.TreeBuilder
-import qualified StrictBytesBuilder
+import qualified ByteString.StrictBuilder
 
 
 main =
@@ -34,8 +34,7 @@ sampleGroup :: String -> Sample -> Bool -> Benchmark
 sampleGroup title sample measureByteString =
   bgroup title $
   [
-    subjectBench "StrictBytesBuilder" $
-    Subject StrictBytesBuilder.bytes mappend mempty StrictBytesBuilder.run mconcat
+    subjectBench "ByteString.StrictBuilder" strictBuilderSubject
     ,
     subjectBench "ByteString.TreeBuilder" $
     Subject ByteString.TreeBuilder.byteString mappend mempty ByteString.TreeBuilder.toByteString mconcat
@@ -56,6 +55,10 @@ sampleGroup title sample measureByteString =
 
 data Subject =
   forall a. Subject (Bytes -> a) (a -> a -> a) a (a -> Bytes) ([a] -> a)
+
+strictBuilderSubject :: Subject
+strictBuilderSubject =
+  Subject ByteString.StrictBuilder.bytes mappend mempty ByteString.StrictBuilder.builderBytes mconcat
 
 type Sample =
   Subject -> Bytes
