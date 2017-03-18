@@ -5,6 +5,7 @@ version:
 category:
   Benchmark
 synopsis:
+  Comparison of different bytestring builders
 homepage:
   https://github.com/nikita-volkov/bytestring-builders-benchmark 
 bug-reports:
