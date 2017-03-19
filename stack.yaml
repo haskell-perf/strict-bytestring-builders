@@ -1,3 +1,0 @@
-resolver: lts-5.10
-extra-deps:
-- bytestring-tree-builder-0.2.5

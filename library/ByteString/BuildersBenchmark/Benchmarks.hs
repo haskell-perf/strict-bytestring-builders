@@ -4,7 +4,6 @@ import Prelude
 import Criterion.Main
 import qualified ByteString.BuildersBenchmark.Subjects as A
 import qualified ByteString.BuildersBenchmark.Actions as B
-import qualified Data.Text as C
 
 
 action :: String -> B.Action -> Benchmark
@@ -23,5 +22,8 @@ action actionName action =
       []
       where
         subjectBench subjectName subject =
-          bench subjectName $ nf action $ subject
+          actionAndSubject action subjectName subject
 
+actionAndSubject :: B.Action -> String -> A.Subject -> Benchmark
+actionAndSubject action subjectName subject =
+  bench subjectName $ nf action $ subject

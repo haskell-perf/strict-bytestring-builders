@@ -42,7 +42,6 @@ library
     ByteString.BuildersBenchmark.Subjects
     ByteString.BuildersBenchmark.Actions
     ByteString.BuildersBenchmark.Benchmarks
-  other-modules:
   build-depends:
     -- benchmarking:
     criterion == 1.1.*,
@@ -57,19 +56,13 @@ library
     -- general:
     rerebase == 1.*
 
-executable benchmark
+benchmark foldl-1-benchmark
+  type:
+    exitcode-stdio-1.0
   hs-source-dirs:
-    benchmark
+    foldl-1-benchmark
   main-is:
     Main.hs
-  other-modules:
-    Main.BufferBuilderMonoid
-    Main.Bytes
-    Main.Concat
-    Main.DList
-    Main.DListWithSize
-    Main.Prelude
-    Main.Seq
   ghc-options:
     -O2
     -threaded
@@ -80,15 +73,48 @@ executable benchmark
   default-language:
     Haskell2010
   build-depends:
-    -- benchmarking:
+    bytestring-builders-benchmark,
     criterion == 1.1.*,
-    -- builders:
-    blaze-builder >= 0.4.0.1 && < 0.5,
-    buffer-builder >= 0.2.4 && < 0.3,
-    bytestring-tree-builder >= 0.2.6 && < 0.3,
-    bytestring-strict-builder == 0.4.*,
-    binary >= 0.8 && < 0.10,
-    cereal == 0.5.*,
-    -- general:
-    primitive >= 0.6 && < 0.7,
+    rerebase == 1.*
+
+benchmark foldl-100-benchmark
+  type:
+    exitcode-stdio-1.0
+  hs-source-dirs:
+    foldl-100-benchmark
+  main-is:
+    Main.hs
+  ghc-options:
+    -O2
+    -threaded
+    "-with-rtsopts=-N"
+    -funbox-strict-fields
+  default-extensions:
+    Arrows, BangPatterns, ConstraintKinds, DataKinds, DefaultSignatures, DeriveDataTypeable, DeriveFoldable, DeriveFunctor, DeriveTraversable, DeriveGeneric, EmptyDataDecls, FlexibleContexts, FlexibleInstances, FunctionalDependencies, GADTs, GeneralizedNewtypeDeriving, LambdaCase, LiberalTypeSynonyms, MagicHash, MultiParamTypeClasses, MultiWayIf, NoImplicitPrelude, NoMonomorphismRestriction, OverloadedStrings, PatternGuards, ParallelListComp, QuasiQuotes, RankNTypes, RecordWildCards, ScopedTypeVariables, StandaloneDeriving, TemplateHaskell, TupleSections, TypeFamilies, TypeOperators, UnboxedTuples
+  default-language:
+    Haskell2010
+  build-depends:
+    bytestring-builders-benchmark,
+    criterion == 1.1.*,
+    rerebase == 1.*
+
+benchmark foldl-10000-benchmark
+  type:
+    exitcode-stdio-1.0
+  hs-source-dirs:
+    foldl-10000-benchmark
+  main-is:
+    Main.hs
+  ghc-options:
+    -O2
+    -threaded
+    "-with-rtsopts=-N"
+    -funbox-strict-fields
+  default-extensions:
+    Arrows, BangPatterns, ConstraintKinds, DataKinds, DefaultSignatures, DeriveDataTypeable, DeriveFoldable, DeriveFunctor, DeriveTraversable, DeriveGeneric, EmptyDataDecls, FlexibleContexts, FlexibleInstances, FunctionalDependencies, GADTs, GeneralizedNewtypeDeriving, LambdaCase, LiberalTypeSynonyms, MagicHash, MultiParamTypeClasses, MultiWayIf, NoImplicitPrelude, NoMonomorphismRestriction, OverloadedStrings, PatternGuards, ParallelListComp, QuasiQuotes, RankNTypes, RecordWildCards, ScopedTypeVariables, StandaloneDeriving, TemplateHaskell, TupleSections, TypeFamilies, TypeOperators, UnboxedTuples
+  default-language:
+    Haskell2010
+  build-depends:
+    bytestring-builders-benchmark,
+    criterion == 1.1.*,
     rerebase == 1.*
