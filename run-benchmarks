@@ -5,13 +5,13 @@ results_dir=dist/results
 mkdir -p "$results_dir"
 
 function benchmark {
-  "dist/build/$1-benchmark/$1-benchmark" -o "$results_dir/$1.html"
+  dist/build/benchmark/benchmark -o "$results_dir/$1.html" "$1"
 }
 
-benchmark "foldl-1"
-benchmark "foldl-100"
-benchmark "foldl-10000"
-benchmark "foldr-100"
-benchmark "foldr-10000"
-benchmark "concat-100"
-benchmark "concat-10000"
+benchmark "foldl-1/"
+benchmark "foldl-100/"
+benchmark "foldl-10000/"
+benchmark "foldr-100/"
+benchmark "foldr-10000/"
+benchmark "concat-100/"
+benchmark "concat-10000/"
