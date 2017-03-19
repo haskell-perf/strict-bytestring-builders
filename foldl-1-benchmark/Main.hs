@@ -9,5 +9,5 @@ import qualified ByteString.BuildersBenchmark.Actions as B
 main =
   defaultMain $
   [
-    A.action "foldl" (B.foldl' 1)
+    A.action "foldl" (B.foldl 1)
   ]

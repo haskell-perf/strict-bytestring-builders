@@ -7,8 +7,8 @@ import qualified ByteString.BuildersBenchmark.Subjects as A
 type Action =
   A.Subject -> ByteString
 
-foldl' :: Int -> Action
-foldl' factor (A.Subject empty (<>) _ fromBytes toBytes) =
+foldl :: Int -> Action
+foldl factor (A.Subject empty (<>) _ fromBytes toBytes) =
   toBytes $ Prelude.foldl' (<>) empty $ replicate factor $
   (fromBytes "hello" <> fromBytes "asdf") <>
   fromBytes "fsndfn" <>
