@@ -7,20 +7,21 @@ import qualified ByteString.BuildersBenchmark.Actions as B
 import qualified Data.Text as C
 
 
-action :: B.Action -> Benchmark
-action (B.Action actionName theAction) =
-  bgroup (C.unpack actionName) $ map subjectBench $ subjects
+action :: String -> B.Action -> Benchmark
+action actionName action =
+  bgroup actionName benchmarks
   where
-    subjects =
-      A.byteStringStrictBuilder :
-      A.byteStringTreeBuilder :
-      A.bufferBuilder :
-      A.binary :
-      A.cereal :
-      A.byteString :
-      A.fastBuilder :
-      A.blazeBuilder :
+    benchmarks =
+      subjectBench "byteStringStrictBuilder" A.byteStringStrictBuilder :
+      subjectBench "byteStringTreeBuilder" A.byteStringTreeBuilder :
+      subjectBench "bufferBuilder" A.bufferBuilder :
+      subjectBench "binary" A.binary :
+      subjectBench "cereal" A.cereal :
+      subjectBench "byteString" A.byteString :
+      subjectBench "fastBuilder" A.fastBuilder :
+      subjectBench "blazeBuilder" A.blazeBuilder :
       []
-    subjectBench subject@(A.Subject subjectName _ _ _ _ _) =
-      bench (C.unpack subjectName) $ nf theAction $ subject
+      where
+        subjectBench subjectName subject =
+          bench subjectName $ nf action $ subject
 

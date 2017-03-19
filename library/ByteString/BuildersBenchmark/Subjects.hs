@@ -15,7 +15,6 @@ import qualified Blaze.ByteString.Builder as I
 data Subject =
   forall a.
   Subject {
-    name :: Text,
     empty :: a,
     append :: a -> a -> a,
     concat :: [a] -> a,
@@ -25,32 +24,32 @@ data Subject =
 
 byteStringStrictBuilder :: Subject
 byteStringStrictBuilder =
-  Subject "bytestring-strict-builder" mempty mappend mconcat A.bytes A.builderBytes
+  Subject mempty mappend mconcat A.bytes A.builderBytes
 
 byteStringTreeBuilder :: Subject
 byteStringTreeBuilder =
-  Subject "bytestring-tree-builder" mempty mappend mconcat G.byteString G.toByteString
+  Subject mempty mappend mconcat G.byteString G.toByteString
 
 bufferBuilder :: Subject
 bufferBuilder =
-  Subject "buffer-builder" (pure ()) (*>) sequenceA_ B.appendBS B.runBufferBuilder
+  Subject (pure ()) (*>) sequenceA_ B.appendBS B.runBufferBuilder
 
 binary :: Subject
 binary =
-  Subject "binary" mempty mappend mconcat C.putByteString (D.toStrict . C.runPut)
+  Subject mempty mappend mconcat C.putByteString (D.toStrict . C.runPut)
 
 cereal :: Subject
 cereal =
-  Subject "cereal" mempty mappend mconcat E.putByteString E.runPut
+  Subject mempty mappend mconcat E.putByteString E.runPut
 
 byteString :: Subject
 byteString =
-  Subject "bytestring" mempty mappend mconcat F.byteString (D.toStrict . F.toLazyByteString)
+  Subject mempty mappend mconcat F.byteString (D.toStrict . F.toLazyByteString)
 
 fastBuilder :: Subject
 fastBuilder =
-  Subject "fast-builder" mempty mappend mconcat H.byteString H.toStrictByteString
+  Subject mempty mappend mconcat H.byteString H.toStrictByteString
 
 blazeBuilder :: Subject
 blazeBuilder =
-  Subject "blaze-builder" mempty mappend mconcat I.fromByteString (D.toStrict . I.toLazyByteString)
+  Subject mempty mappend mconcat I.fromByteString (D.toStrict . I.toLazyByteString)
