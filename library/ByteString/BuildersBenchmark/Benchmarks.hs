@@ -26,4 +26,4 @@ action actionName action =
 
 actionAndSubject :: B.Action -> String -> A.Subject -> Benchmark
 actionAndSubject action subjectName subject =
-  bench subjectName $ nf action $ subject
+  bench subjectName $ whnf action $ subject
