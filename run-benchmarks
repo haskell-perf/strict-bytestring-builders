@@ -8,12 +8,8 @@ function benchmark {
   dist/build/benchmark/benchmark -o "$results_dir/$1.html" "$1/"
 }
 
-benchmark "finalization-1"
-benchmark "finalization-10"
-benchmark "finalization-100"
-benchmark "finalization-1000"
-benchmark "finalization-10000"
-benchmark "regular-concat-10"
+benchmark "averaged-appends-1"
+benchmark "averaged-appends-100"
+benchmark "averaged-appends-10000"
 benchmark "regular-concat-100"
-benchmark "regular-concat-1000"
 benchmark "regular-concat-10000"

@@ -31,3 +31,15 @@ concat factor (A.Subject empty (<>) concat _ fromBytes toBytes) =
 regularConcat :: [ByteString] -> Action
 regularConcat input (A.Subject empty (<>) concat foldMap fromBytes toBytes) =
   (toBytes . foldMap fromBytes) input
+
+averagedAppends :: Int -> Action
+averagedAppends factor (A.Subject empty (<>) concat foldMap fromBytes toBytes) =
+  toBytes builder
+  where
+    builder =
+      (Prelude.foldl' (<>) empty $ replicate factor $ chunk) <>
+      (Prelude.foldr (<>) empty $ replicate factor $ chunk)
+    chunk =
+      (fromBytes "hello" <> fromBytes "asdf") <>
+      fromBytes "fsndfn" <>
+      (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
