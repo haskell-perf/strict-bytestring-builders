@@ -10,13 +10,13 @@ import qualified ByteString.BuildersBenchmark.Inputs as C
 main =
   defaultMain $
   [
-    A.action "averaged-appends-1" (B.averagedAppends 1)
+    A.action "averagedAppends-1" (B.averagedAppends 1)
     ,
-    A.action "averaged-appends-100" (B.averagedAppends 100)
+    A.action "averagedAppends-100" (B.averagedAppends 100)
     ,
-    A.action "averaged-appends-10000" (B.averagedAppends 10000)
+    A.action "averagedAppends-10000" (B.averagedAppends 10000)
     ,
-    A.action "regular-concat-100" (B.regularConcat $!! C.sized 100)
+    A.action "regularConcat-100" (B.regularConcat $!! C.sized 100)
     ,
-    A.action "regular-concat-10000" (B.regularConcat $!! C.sized 10000)
+    A.action "regularConcat-10000" (B.regularConcat $!! C.sized 10000)
   ]
