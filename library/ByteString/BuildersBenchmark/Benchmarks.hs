@@ -28,3 +28,13 @@ action actionName action =
 actionAndSubject :: B.Action -> String -> A.Subject -> Benchmark
 actionAndSubject action subjectName subject =
   bench subjectName $ whnf action $ subject
+
+finalization :: Int -> String -> A.Subject -> Benchmark
+finalization factor subjectName (A.Subject mempty (<>) mconcat foldMap fromBytes toBytes) =
+  bench subjectName $! whnf toBytes $! subject
+  where
+    subject =
+      foldr (<>) mempty $ replicate factor $
+      (fromBytes "hello" <> fromBytes "asdf") <>
+      fromBytes "fsndfn" <>
+      (fromBytes "dfgknfg" <> fromBytes "aaaaaa")

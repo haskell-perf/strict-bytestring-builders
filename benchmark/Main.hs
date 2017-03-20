@@ -10,6 +10,14 @@ import qualified ByteString.BuildersBenchmark.Inputs as C
 main =
   defaultMain $
   [
+    A.allSubjects "finalization-1" (A.finalization 1)
+    ,
+    A.allSubjects "finalization-10" (A.finalization 10)
+    ,
+    A.allSubjects "finalization-100" (A.finalization 100)
+    ,
+    A.allSubjects "finalization-1000" (A.finalization 1000)
+    ,
     A.action "regular-concat-10" (B.regularConcat $!! C.sized 10)
     ,
     A.action "regular-concat-100" (B.regularConcat $!! C.sized 100)
@@ -25,8 +33,4 @@ main =
     A.action "foldr-100" (B.foldr 100)
     ,
     A.action "foldr-10000" (B.foldr 10000)
-    ,
-    A.action "concat-100" (B.concat 100)
-    ,
-    A.action "concat-10000" (B.concat 10000)
   ]
