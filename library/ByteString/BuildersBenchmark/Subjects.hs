@@ -14,42 +14,36 @@ import qualified Blaze.ByteString.Builder as I
 
 data Subject =
   forall a.
-  Subject {
-    empty :: a,
-    append :: a -> a -> a,
-    concat :: [a] -> a,
-    fromBytes :: ByteString -> a,
-    toBytes :: a -> ByteString
-  }
+  Subject a (a -> a -> a) ([a] -> a) (forall b. (b -> a) -> [b] -> a) (ByteString -> a) (a -> ByteString)
 
 byteStringStrictBuilder :: Subject
 byteStringStrictBuilder =
-  Subject mempty mappend mconcat A.bytes A.builderBytes
+  Subject mempty mappend mconcat foldMap A.bytes A.builderBytes
 
 byteStringTreeBuilder :: Subject
 byteStringTreeBuilder =
-  Subject mempty mappend mconcat G.byteString G.toByteString
+  Subject mempty mappend mconcat foldMap G.byteString G.toByteString
 
 bufferBuilder :: Subject
 bufferBuilder =
-  Subject (pure ()) (*>) sequenceA_ B.appendBS B.runBufferBuilder
+  Subject (pure ()) (*>) sequenceA_ traverse_ B.appendBS B.runBufferBuilder
 
 binary :: Subject
 binary =
-  Subject mempty mappend mconcat C.putByteString (D.toStrict . C.runPut)
+  Subject mempty mappend mconcat foldMap C.putByteString (D.toStrict . C.runPut)
 
 cereal :: Subject
 cereal =
-  Subject mempty mappend mconcat E.putByteString E.runPut
+  Subject mempty mappend mconcat foldMap E.putByteString E.runPut
 
 byteString :: Subject
 byteString =
-  Subject mempty mappend mconcat F.byteString (D.toStrict . F.toLazyByteString)
+  Subject mempty mappend mconcat foldMap F.byteString (D.toStrict . F.toLazyByteString)
 
 fastBuilder :: Subject
 fastBuilder =
-  Subject mempty mappend mconcat H.byteString H.toStrictByteString
+  Subject mempty mappend mconcat foldMap H.byteString H.toStrictByteString
 
 blazeBuilder :: Subject
 blazeBuilder =
-  Subject mempty mappend mconcat I.fromByteString (D.toStrict . I.toLazyByteString)
+  Subject mempty mappend mconcat foldMap I.fromByteString (D.toStrict . I.toLazyByteString)
