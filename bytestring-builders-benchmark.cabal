@@ -42,6 +42,7 @@ library
     ByteString.BuildersBenchmark.Subjects
     ByteString.BuildersBenchmark.Actions
     ByteString.BuildersBenchmark.Benchmarks
+    ByteString.BuildersBenchmark.Inputs
   build-depends:
     -- benchmarking:
     criterion == 1.1.*,

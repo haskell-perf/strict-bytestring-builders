@@ -11,8 +11,8 @@ action actionName action =
   bgroup actionName benchmarks
   where
     benchmarks =
-      subjectBench "byteStringTreeBuilder" A.byteStringTreeBuilder :
       subjectBench "byteStringStrictBuilder" A.byteStringStrictBuilder :
+      subjectBench "byteStringTreeBuilder" A.byteStringTreeBuilder :
       subjectBench "bufferBuilder" A.bufferBuilder :
       subjectBench "binary" A.binary :
       subjectBench "cereal" A.cereal :

@@ -27,3 +27,7 @@ concat factor (A.Subject empty (<>) concat fromBytes toBytes) =
   (fromBytes "hello" <> fromBytes "asdf") <>
   fromBytes "fsndfn" <>
   (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
+
+regularConcat :: [ByteString] -> Action
+regularConcat input (A.Subject empty (<>) concat fromBytes toBytes) =
+  (toBytes . concat . fmap fromBytes) input
