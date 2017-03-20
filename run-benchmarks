@@ -13,3 +13,11 @@ benchmark "averagedAppends-100"
 benchmark "averagedAppends-10000"
 benchmark "regularConcat-100"
 benchmark "regularConcat-10000"
+
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+git checkout gh-pages
+rm -rf results
+mv dist/results results
+git add --all
+git commit -m "Update results"
+git checkout "$current_branch"
