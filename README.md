@@ -8,8 +8,8 @@ If you know any way of optimizing any particular benchmark or can suggest anothe
 
 "bytestring-strict-builder" and "bytestring-tree-builder" seem to be the winners on average. "fast-builder" and "buffer-builder" often show good results. In all tests the standard builder and hence its offspring-solutions like "cereal" and "binary" seems dominated.
 
-* [averagedAppends-1](http://nikita-volkov.github.io/bytestring-builders-benchmark/results/averagedAppends-1.html)
-* [averagedAppends-100](http://nikita-volkov.github.io/bytestring-builders-benchmark/results/averagedAppends-100.html)
-* [averagedAppends-10000](http://nikita-volkov.github.io/bytestring-builders-benchmark/results/averagedAppends-10000.html)
-* [regularConcat-100](http://nikita-volkov.github.io/bytestring-builders-benchmark/results/regularConcat-100.html)
-* [regularConcat-10000](http://nikita-volkov.github.io/bytestring-builders-benchmark/results/regularConcat-10000.html)
+* [averagedAppends-1](http://haskell-perf.github.io/bytestring-builders-benchmark/results/averagedAppends-1.html)
+* [averagedAppends-100](http://haskell-perf.github.io/bytestring-builders-benchmark/results/averagedAppends-100.html)
+* [averagedAppends-10000](http://haskell-perf.github.io/bytestring-builders-benchmark/results/averagedAppends-10000.html)
+* [regularConcat-100](http://haskell-perf.github.io/bytestring-builders-benchmark/results/regularConcat-100.html)
+* [regularConcat-10000](http://haskell-perf.github.io/bytestring-builders-benchmark/results/regularConcat-10000.html)
