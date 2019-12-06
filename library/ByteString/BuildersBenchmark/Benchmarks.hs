@@ -1,7 +1,7 @@
-module ByteString.BuildersBenchmark.Benchmarks where
+module ByteString.BuildersBenchmark.Benchmarks (action) where
 
 import Prelude
-import Criterion.Main
+import Gauge.Main
 import qualified ByteString.BuildersBenchmark.Subjects as A
 import qualified ByteString.BuildersBenchmark.Actions as B
 

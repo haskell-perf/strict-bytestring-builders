@@ -1,7 +1,6 @@
 module ByteString.BuildersBenchmark.Inputs where
 
 import Prelude
-import Criterion.Main
 import qualified ByteString.BuildersBenchmark.Subjects as A
 import qualified ByteString.BuildersBenchmark.Actions as B
 
