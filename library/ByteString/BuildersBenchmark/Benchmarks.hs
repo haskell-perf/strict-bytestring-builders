@@ -20,14 +20,17 @@ allSubjects groupName subjectBench =
       subjectBench "binary" A.binary :
       subjectBench "cereal" A.cereal :
       []
+{-# INLINE allSubjects #-}
 
-action :: String -> B.Action -> Benchmark
-action actionName action =
-  allSubjects actionName (actionAndSubject action)
+action :: String -> (a -> B.Action) -> a -> Benchmark
+action actionName action a =
+  allSubjects actionName (actionAndSubject action a)
+{-# INLINE action #-}
 
-actionAndSubject :: B.Action -> String -> A.Subject -> Benchmark
-actionAndSubject action subjectName subject =
-  bench subjectName $ whnf action $ subject
+actionAndSubject :: (a -> B.Action) -> a -> String -> A.Subject -> Benchmark
+actionAndSubject action a subjectName subject =
+  bench subjectName $ whnf (\x -> action x subject) a
+{-# INLINE actionAndSubject #-}
 
 finalization :: Int -> String -> A.Subject -> Benchmark
 finalization factor subjectName (A.Subject mempty (<>) mconcat foldMap fromBytes toBytes) =
