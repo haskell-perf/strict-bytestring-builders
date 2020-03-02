@@ -1,3 +1,4 @@
+cabal-version: 2.4
 name:
   bytestring-builders-benchmark
 version:
@@ -22,8 +23,6 @@ license-file:
   LICENSE
 build-type:
   Simple
-cabal-version:
-  >=1.10
 
 source-repository head
   type:
@@ -45,7 +44,7 @@ library
     ByteString.BuildersBenchmark.Inputs
   build-depends:
     -- benchmarking:
-    criterion == 1.1.*,
+    gauge ^>=0.2,
     -- builders:
     blaze-builder >= 0.4.0.1 && < 0.5,
     buffer-builder >= 0.2.4 && < 0.3,
@@ -67,7 +66,6 @@ benchmark benchmark
   ghc-options:
     -O2
     -threaded
-    "-with-rtsopts=-N"
     -funbox-strict-fields
   default-extensions:
     Arrows, BangPatterns, ConstraintKinds, DataKinds, DefaultSignatures, DeriveDataTypeable, DeriveFoldable, DeriveFunctor, DeriveTraversable, DeriveGeneric, EmptyDataDecls, FlexibleContexts, FlexibleInstances, FunctionalDependencies, GADTs, GeneralizedNewtypeDeriving, LambdaCase, LiberalTypeSynonyms, MagicHash, MultiParamTypeClasses, MultiWayIf, NoImplicitPrelude, NoMonomorphismRestriction, OverloadedStrings, PatternGuards, ParallelListComp, QuasiQuotes, RankNTypes, RecordWildCards, ScopedTypeVariables, StandaloneDeriving, TemplateHaskell, TupleSections, TypeFamilies, TypeOperators, UnboxedTuples
@@ -75,5 +73,5 @@ benchmark benchmark
     Haskell2010
   build-depends:
     bytestring-builders-benchmark,
-    criterion == 1.1.*,
+    gauge,
     rerebase == 1.*

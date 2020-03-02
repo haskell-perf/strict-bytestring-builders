@@ -13,6 +13,7 @@ foldl factor (A.Subject empty (<>) _ _ fromBytes toBytes) =
   (fromBytes "hello" <> fromBytes "asdf") <>
   fromBytes "fsndfn" <>
   (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
+{-# INLINE foldl #-}
 
 foldr :: Int -> Action
 foldr factor (A.Subject empty (<>) concat _ fromBytes toBytes) =
@@ -20,6 +21,7 @@ foldr factor (A.Subject empty (<>) concat _ fromBytes toBytes) =
   (fromBytes "hello" <> fromBytes "asdf") <>
   fromBytes "fsndfn" <>
   (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
+{-# INLINE foldr #-}
 
 concat :: Int -> Action
 concat factor (A.Subject empty (<>) concat _ fromBytes toBytes) =
@@ -27,10 +29,12 @@ concat factor (A.Subject empty (<>) concat _ fromBytes toBytes) =
   (fromBytes "hello" <> fromBytes "asdf") <>
   fromBytes "fsndfn" <>
   (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
+{-# INLINE concat #-}
 
 regularConcat :: [ByteString] -> Action
 regularConcat input (A.Subject empty (<>) concat foldMap fromBytes toBytes) =
   (toBytes . foldMap fromBytes) input
+{-# INLINE regularConcat #-}
 
 averagedAppends :: Int -> Action
 averagedAppends factor (A.Subject empty (<>) concat foldMap fromBytes toBytes) =
@@ -43,3 +47,4 @@ averagedAppends factor (A.Subject empty (<>) concat foldMap fromBytes toBytes) =
       (fromBytes "hello" <> fromBytes "asdf") <>
       fromBytes "fsndfn" <>
       (fromBytes "dfgknfg" <> fromBytes "aaaaaa")
+{-# INLINE averagedAppends #-}
