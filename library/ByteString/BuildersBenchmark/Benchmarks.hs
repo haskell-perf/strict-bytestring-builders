@@ -19,6 +19,7 @@ allSubjects groupName subjectBench =
       subjectBench "blazeBuilder" A.blazeBuilder :
       subjectBench "binary" A.binary :
       subjectBench "cereal" A.cereal :
+      subjectBench "mason" A.masonBuilder :
       []
 {-# INLINE allSubjects #-}
 

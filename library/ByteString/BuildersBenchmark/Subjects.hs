@@ -10,6 +10,7 @@ import qualified Data.ByteString.Lazy as D
 import qualified Data.ByteString.Builder as F
 import qualified Data.ByteString.FastBuilder as H
 import qualified Blaze.ByteString.Builder as I
+import qualified Mason.Builder as M
 
 
 data Subject =
@@ -55,3 +56,8 @@ blazeBuilder :: Subject
 blazeBuilder =
   Subject mempty mappend mconcat foldMap I.fromByteString (D.toStrict . I.toLazyByteString)
 {-# INLINE blazeBuilder #-}
+
+masonBuilder :: Subject
+masonBuilder =
+  Subject mempty mappend mconcat foldMap M.byteString M.toStrictByteString
+{-# INLINE masonBuilder #-}
