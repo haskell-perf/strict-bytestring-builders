@@ -6,8 +6,6 @@ If you know any way of optimizing any particular benchmark or can suggest anothe
 
 # Current results
 
-"bytestring-strict-builder" and "bytestring-tree-builder" seem to be the winners on average. "fast-builder" and "buffer-builder" often show good results. In all tests the standard builder and hence its offspring-solutions like "cereal" and "binary" seems dominated.
-
 ```
 averagedAppends-1/byteStringStrictBuilder mean 93.19 ns  ( +- 4.125 ns  )
 averagedAppends-1/byteStringTreeBuilder  mean 167.4 ns  ( +- 14.62 ns  )
