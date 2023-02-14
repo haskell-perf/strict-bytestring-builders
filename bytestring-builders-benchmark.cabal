@@ -8,9 +8,9 @@ category:
 synopsis:
   Comparison of different bytestring builders
 homepage:
-  https://github.com/nikita-volkov/bytestring-builders-benchmark 
+  https://github.com/haskell-perf/strict-bytestring-builders
 bug-reports:
-  https://github.com/nikita-volkov/bytestring-builders-benchmark/issues 
+  https://github.com/haskell-perf/strict-bytestring-builders/issues
 author:
   Nikita Volkov <nikita.y.volkov@mail.ru>
 maintainer:
@@ -28,7 +28,7 @@ source-repository head
   type:
     git
   location:
-    git://github.com/nikita-volkov/bytestring-builders-benchmark.git
+    git://github.com/haskell-perf/strict-bytestring-builders.git
 
 library
   hs-source-dirs:
@@ -54,6 +54,7 @@ library
     cereal == 0.5.*,
     fast-builder ^>=0.1,
     mason ^>=0.2,
+    ptr-poker ^>=0.1.2.8,
     -- general:
     rerebase == 1.*
 

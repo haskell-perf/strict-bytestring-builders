@@ -11,6 +11,7 @@ import qualified Data.ByteString.Builder as F
 import qualified Data.ByteString.FastBuilder as H
 import qualified Blaze.ByteString.Builder as I
 import qualified Mason.Builder as M
+import qualified PtrPoker.Write as PP
 
 
 data Subject =
@@ -61,3 +62,8 @@ masonBuilder :: Subject
 masonBuilder =
   Subject mempty mappend mconcat foldMap M.byteString M.toStrictByteString
 {-# INLINE masonBuilder #-}
+
+ptrPokerBuilder :: Subject
+ptrPokerBuilder =
+  Subject mempty mappend mconcat foldMap PP.byteString PP.writeToByteString
+{-# INLINE ptrPokerBuilder #-}
