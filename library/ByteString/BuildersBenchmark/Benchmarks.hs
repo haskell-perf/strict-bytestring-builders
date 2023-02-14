@@ -20,6 +20,7 @@ allSubjects groupName subjectBench =
       subjectBench "binary" A.binary :
       subjectBench "cereal" A.cereal :
       subjectBench "mason" A.masonBuilder :
+      subjectBench "ptr-poker" A.ptrPokerBuilder :
       []
 {-# INLINE allSubjects #-}
 

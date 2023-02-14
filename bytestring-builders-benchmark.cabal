@@ -54,6 +54,7 @@ library
     cereal == 0.5.*,
     fast-builder ^>=0.1,
     mason ^>=0.2,
+    ptr-poker ^>=0.1.2.8,
     -- general:
     rerebase == 1.*
 
